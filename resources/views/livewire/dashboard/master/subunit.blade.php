@@ -4,7 +4,7 @@
     </h2>
 </x-slot>
 
-<div class="py-12">
+<div class="py-8">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="p-2 sm:px-10 bg-white border-b border-gray-200">
@@ -27,8 +27,8 @@
                                     <th scope="col" class="py-3 px-6">
                                         Status
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        <span class="sr-only">Edit</span>
+                                    <th scope="col" class="py-3 px-6 text-right">
+                                        Edit
                                     </th>
                                 </tr>
                             </thead>
@@ -44,7 +44,7 @@
                                         {{ $val->keterangan }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{ $val->enabled }}
+                                        {!! $val->statusLabel() !!}
                                     </td>
                                     <td class="py-4 px-6 text-right">
                                         <a href="#"

@@ -15,19 +15,13 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('subunit') }}" :active="request()->routeIs('subunit')">
-                        {{ __('Subunit') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('bagian') }}" :active="request()->routeIs('bagian')">
-                        {{ __('Bagian Farmasi') }}
-                    </x-jet-nav-link>
 
                     {{-- Iini ftopeofn --}}
                     <x-jet-dropdown>
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">
                                 <button type="button"
-                                    class="inline-flex items-center px-3 py-8 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
+                                    class="inline-flex items-center px-3 py-6 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-indigo-400 hover:bg-indigo-50 hover:text-gray-700 focus:outline-none focus:bg-indigo-400 active:bg-indigo-400 transition">
                                     Master
                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor">
@@ -43,10 +37,16 @@
                             <div class="w-60">
                                 <!-- Team Management -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Manage Team') }}
+                                    {{ __('Manage Master') }}
                                 </div>
 
-                                <x-jet-dropdown-link href="{{ route('bagian') }}">
+                                <x-jet-dropdown-link href="{{ route('subunit') }}"
+                                    :active="request()->routeIs('subunit')">
+                                    {{ __('Subunit') }}
+                                </x-jet-dropdown-link>
+
+                                <x-jet-dropdown-link href=" {{ route('bagian') }}"
+                                    :active="request()->routeIs('bagian')">
                                     {{ __('Bagian') }}
                                 </x-jet-dropdown-link>
                             </div>
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class=" hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                 <div class="ml-3 relative">
