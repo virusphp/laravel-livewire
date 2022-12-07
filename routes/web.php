@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Livewire\Dashboard\Index;
+use App\Http\Livewire\Dashboard\Master\Subunit;
+use App\Http\Livewire\Master\Bagian\BagianIndex;
+use App\Http\Livewire\Master\Subunit\SubunitIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,16 +27,18 @@ Route::middleware([
     'verified'
 ])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+     Route::group(['namespace' => 'Dashboard'], function () {
+        Route::get('dashboard', Index::class)->name('dashboard');
+    });
 
-     Route::group(['prefix' => 'master', 'namespace' => 'Dashboard'], function () { 
-        Route::group(['namespace' => 'Master'], function () {
+    Route::group(['namespace' => 'Master'], function () {
 
-            Route::get('subunit', Subunit::class)->name('subunit');
-            Route::get('bagian', BagianFarmasi::class)->name('bagian');
-
+        Route::group(['namespace' => 'Subunit'], function () {
+            Route::get('subunit', SubunitIndex::class)->name('subunit');
         });
-     });
+        
+        Route::group(['namespace' => 'Bagian'], function () {
+            Route::get('bagian', BagianIndex::class)->name('bagian');
+        });
+    });
 });

@@ -13,6 +13,8 @@ class BagianFarmasi extends Model
 
     protected $table = "ap_bagian";
 
+    protected $primaryKey = "kdbagian";
+
     protected $fillable = [
         'kdbagian','nmbagian','status_apotik'
     ];
@@ -20,13 +22,15 @@ class BagianFarmasi extends Model
     public function scopePencarian($query, $search)
     {
         return $query->when($search, function($q, $search) {
-            $q->where('nama_sub_unit', 'like', "%{$search}%");
+            $q->where('nmbagian', 'like', "%{$search}%");
         });
     }
 
-    public function scopeAktif($query)
+    public function scopeAktif($query, $depo)
     {
-        return $query->where('status_apotik', '!=', null);
+        return $query->when($depo, function($q) {
+            $q->where('status_apotik', 1);
+        })->where('status_apotik', '!=', null);
     }
 
     public function scopeUrut($query)

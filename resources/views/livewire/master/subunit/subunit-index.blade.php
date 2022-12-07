@@ -55,6 +55,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="py-3">
+                        {{ $dataSubunit->appends(['search' => 'search'])->render() }}
+                    </div>
                 </div>
             </div>
         </div>
