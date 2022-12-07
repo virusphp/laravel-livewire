@@ -115,23 +115,33 @@
                             <div class="col-span-6 sm:col-span-4">
                                 <x-jet-label for="kdbagian" value="{{ __('Kode Bagian') }}" />
                                 <x-jet-input id="kdbagian" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="barangfarmasi.kdbarang" />
-                                <x-jet-input-error for="barangfarmasi.kdbarang" class="mt-2" />
+                                    wire:model.defer="bagianfarmasi.kdbarang" />
+                                <x-jet-input-error for="bagianfarmasi.kdbarang" class="mt-2" />
                             </div>
-                            <div class="col-span-6 sm:col-span-4">
+                            <div class="col-span-6 sm:col-span-4 mt-2">
                                 <x-jet-label for="nmbagian" value="{{ __('Nama Bagian') }}" />
                                 <x-jet-input id="nmbagian" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="barangfarmasi.nmbagian" />
-                                <x-jet-input-error for="barangfarmasi.nmbagian" class="mt-2" />
+                                    wire:model.defer="bagianfarmasi.nmbagian" />
+                                <x-jet-input-error for="bagianfarmasi.nmbagian" class="mt-2" />
                             </div>
-                            <div class="col-span-6 sm:col-span-4">
+                            <div class="col-span-6 sm:col-span-4 mt-2">
+                                <x-jet-label for="kd-sub-unit" value="{{ __('Subunit') }}" />
+                                <select wire:model.defer="bagianfarmasi.kd_sub_unit" id="kd-sub-unit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="">Select Subunit</option>
+                                    <option value="1">Rawat jlah </option>
+                                    <option value="0">ANFRAH</option>
+                                </select>
+                            </div>
+                            <div class="col-span-6 sm:col-span-4 mt-2">
                                 <x-jet-label for="status_apotik" value="{{ __('Status Apotik') }}" />
                                 <label for="status_apotik" class="flex items-center">
-                                    <x-jet-checkbox id="status_apotik" wire:model.defer="barangfarmasi.status_apotik" />
-                                    <span class="ml-2 text-sm text-gray-600">{{ __('Status Apotik') }}</span>
+                                    <x-jet-checkbox id="status_apotik" wire:model.defer="bagianfarmasi.status_apotik" />
+                                    <span class="ml-2 text-sm text-gray-600">{{ __('Depo') }}</span>
                                 </label>
-                                <x-jet-input-error for="barangfarmasi.status_apotik" class="mt-2" />
+                                <x-jet-input-error for="bagianfarmasi.status_apotik" class="mt-2" />
                             </div>
+
                         </x-slot>
 
                         <x-slot name="footer">

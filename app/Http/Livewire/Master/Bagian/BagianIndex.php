@@ -24,10 +24,10 @@ class BagianIndex extends Component
     ];
 
     protected $rules = [
-        'barangfarmasi.kdbagian' => 'required|string|min:2',
-        'barangfarmasi.nmbagian' => 'required|string|min:5',
-        'barangfarmasi.kd_sub_unit' => 'required',
-        'barangfarmasi.status_apotik' => 'required',
+        'bagianfarmasi.kdbagian' => 'required|string|min:2',
+        'bagianfarmasi.nmbagian' => 'required|string|min:5',
+        'bagianfarmasi.kd_sub_unit' => 'required',
+        'bagianfarmasi.status_apotik' => 'required',
     ];
 
     public function confirmDelete($id)
