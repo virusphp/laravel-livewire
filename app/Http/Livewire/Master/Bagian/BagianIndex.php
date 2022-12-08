@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Master\Bagian;
 
 use App\Models\BagianFarmasi;
+use App\Models\Subunit;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,9 +15,15 @@ class BagianIndex extends Component
     public $limit = 10;
     public $search;
     public $depo;
+    public $bagianFarmasi;
+    public $ottPlatform = '';
 
     public $confirmationDelete = false;
     public $confirmationAdd = false;
+
+    protected $listeners = [
+        'getSubunit'
+    ];
 
     protected $queryString = [
         'depo' => ['except' => false],
@@ -24,11 +31,16 @@ class BagianIndex extends Component
     ];
 
     protected $rules = [
-        'bagianfarmasi.kdbagian' => 'required|string|min:2',
-        'bagianfarmasi.nmbagian' => 'required|string|min:5',
-        'bagianfarmasi.kd_sub_unit' => 'required',
-        'bagianfarmasi.status_apotik' => 'required',
+        'bagianFarmasi.kdbagian' => 'required|min:2',
+        'bagianFarmasi.nmbagian' => 'required|min:5',
+        'bagianFarmasi.kd_sub_unit' => 'required',
+        'bagianFarmasi.status_apotik' => 'number',
     ];
+
+    public function getSubunit($value)
+    {
+        $this->bagianFarmasi['kd_sub_unit'] = $value;
+    }
 
     public function confirmDelete($id)
     {
@@ -37,6 +49,7 @@ class BagianIndex extends Component
 
     public function confirmAdd()
     {
+        $this->reset(['bagianFarmasi']);
         $this->confirmationAdd = true;
     }
 
@@ -48,7 +61,14 @@ class BagianIndex extends Component
 
     public function saveDepo()
     {
-
+        $this->validate();
+        BagianFarmasi::create([
+            "kdbagian" => $this->bagianFarmasi['kdbagian'],
+            "nmbagian" => $this->bagianFarmasi['nmbagian'],
+            "kd_sub_unit" => $this->bagianFarmasi['kd_sub_unit'],
+            "status_apotik" => $this->bagianFarmasi['status_apotik'] ?? 0,
+        ]);
+        $this->confirmationAdd = false;
     }
 
     public function render()

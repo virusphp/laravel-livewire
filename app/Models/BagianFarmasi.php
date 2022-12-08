@@ -15,8 +15,10 @@ class BagianFarmasi extends Model
 
     protected $primaryKey = "kdbagian";
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'kdbagian','nmbagian','status_apotik'
+        'kdbagian','nmbagian','status_apotik', 'kd_sub_unit'
     ];
 
     public function scopePencarian($query, $search)

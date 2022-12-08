@@ -11,6 +11,8 @@ class Subunit extends Model
 
     protected $connection = "sqlsrv";
 
+    protected $primaryKey = "kd_sub_unit";
+
     protected $table = "sub_unit";
 
     public function scopePencarian($query, $search)
@@ -18,6 +20,16 @@ class Subunit extends Model
         return $query->when($search, function($q, $search) {
             $q->where('nama_sub_unit', 'like', "%{$search}%");
         });
+    }
+
+    public function scopeAktif($query)
+    {
+        return $query->where('enabled', 1);
+    }
+
+    public function scopeUrut($query)
+    {
+        return $query->orderBy('kd_sub_unit', 'asc');
     }
 
     public function statusLabel()
