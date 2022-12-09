@@ -35,9 +35,9 @@ class BagianFarmasi extends Model
         })->where('status_apotik', '!=', null);
     }
 
-    public function scopeUrut($query)
+    public function scopeUrut($query, $sortBy, $sortAsc)
     {
-        return $query->orderBy('kdbagian', 'asc');
+        return $query->orderBy($sortBy, $sortAsc  ? 'ASC' : 'DESC');
     }
 
     public function statusLabel()

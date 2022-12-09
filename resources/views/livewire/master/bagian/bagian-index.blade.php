@@ -35,13 +35,20 @@
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="py-3 px-6 font-bold">
-                                        Kode Bagian
+                                        <div class="flex items-center">
+                                            <button wire:click="sortBy('kdbagian')">Kode Bagian </buttcon>
+                                                <x-sort-icon sortField="kdbagian" :sort-by="$sortBy"
+                                                    :sort-asc="$sortAsc" />
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 ">
+                                        <div class="flex items-center">
+                                            <button wire:click="sortBy('nmbagian')">Nama Bagian </button>
+                                            <x-sort-icon sortField="nmbagian" :sort-by="$sortBy" :sort-asc="$sortAsc" />
+                                        </div>
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Nama Bagian
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Status
+                                        <button wire:click="sortBy('status_apotik')">Status </button>
                                     </th>
                                     <th scope="col" class="py-3 px-6 text-right">
                                         Aksi

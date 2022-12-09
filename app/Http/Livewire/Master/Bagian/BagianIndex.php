@@ -16,7 +16,8 @@ class BagianIndex extends Component
     public $search;
     public $depo;
     public $bagianFarmasi;
-    public $ottPlatform = '';
+    public $sortBy = 'kdbagian';
+    public $sortAsc = true;
 
     public $confirmationDelete = false;
     public $confirmationAdd = false;
@@ -27,7 +28,9 @@ class BagianIndex extends Component
 
     protected $queryString = [
         'depo' => ['except' => false],
-        'search' => ['except' => '']
+        'search' => ['except' => ''],
+        'sortBy' => ['except' => 'kdbagian'],
+        'sortAsc' => ['except' => true],
     ];
 
     protected $rules = [
@@ -36,6 +39,14 @@ class BagianIndex extends Component
         'bagianFarmasi.kd_sub_unit' => 'required',
         'bagianFarmasi.status_apotik' => 'number',
     ];
+
+    public function sortBy($field)
+    {
+        if ($field == $this->sortBy) {
+            $this->sortAsc = !$this->sortAsc;
+        }
+        $this->sortBy = $field;
+    }
 
     public function updatingDepo()
     {
@@ -46,7 +57,6 @@ class BagianIndex extends Component
     {
         $this->resetPage();
     }
-
 
     public function getSubunit($value)
     {
@@ -91,7 +101,11 @@ class BagianIndex extends Component
 
     public function render()
     {
-        $dataBagian = BagianFarmasi::select('kdbagian','nmbagian','status_apotik')->aktif($this->depo)->pencarian($this->search)->urut()->paginate($this->limit);
+        $dataBagian = BagianFarmasi::select('kdbagian','nmbagian','status_apotik')
+            ->aktif($this->depo)
+            ->pencarian($this->search)
+            ->urut($this->sortBy, $this->sortAsc)
+            ->paginate($this->limit);
        return view('livewire.master.bagian.bagian-index', compact('dataBagian'));
     }
 }
