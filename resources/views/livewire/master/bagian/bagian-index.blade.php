@@ -22,7 +22,7 @@
                 <div class="mt-2 text-gray-500">
                     <div class="flex justify-between py-2">
                         <div>
-                            <input type="text" wire:model="search" placeholder="Search..."
+                            <input type="search" wire:model.debounce.300ms="search" placeholder="Search..."
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
                         <div class="mr-2">
@@ -63,8 +63,10 @@
                                         {!! $val->statusLabel() !!}
                                     </td>
                                     <td class="py-4 px-6 text-right">
-                                        <a href="#"
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                        <x-jet-button wire:click="confirmEdit({{ $val->kdbagian }})"
+                                            class="bg-orange-500 hover:bg-orange-700">
+                                            Edit
+                                        </x-jet-button>
                                         <x-jet-danger-button class="ml-3"
                                             wire:click="confirmDelete({{ $val->kdbagian }})"
                                             wire:loading.attr="disabled">
@@ -108,7 +110,7 @@
                     {{-- Model Confirmasi Add --}}
                     <x-jet-dialog-modal wire:model="confirmationAdd">
                         <x-slot name="title">
-                            {{ __('Add Depo') }}
+                            {{ isset( $this->bagianFarmasi->kdbagian) ? 'Edit Depo' : 'Add Depo' }}
                         </x-slot>
 
                         <x-slot name="content">

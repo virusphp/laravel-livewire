@@ -37,6 +37,17 @@ class BagianIndex extends Component
         'bagianFarmasi.status_apotik' => 'number',
     ];
 
+    public function updatingDepo()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+
     public function getSubunit($value)
     {
         $this->bagianFarmasi['kd_sub_unit'] = $value;
@@ -50,6 +61,13 @@ class BagianIndex extends Component
     public function confirmAdd()
     {
         $this->reset(['bagianFarmasi']);
+        $this->confirmationAdd = true;
+    }
+
+    public function confirmEdit(BagianFarmasi $bagianFarmasi)
+    {
+        $this->bagianFarmasi = $bagianFarmasi;
+        // dd($bagianFarmasi);
         $this->confirmationAdd = true;
     }
 
