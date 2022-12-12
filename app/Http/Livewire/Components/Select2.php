@@ -10,6 +10,8 @@ class Select2 extends Component
     public $subunit;
     public $kodeSubunit;
 
+     protected $listeners = ['setSubunit'];
+
     public function mount()
     {
         $this->subunit = Subunit::select('kd_sub_unit','nama_sub_unit')->aktif()->urut()->get();
@@ -23,5 +25,10 @@ class Select2 extends Component
     public function render()
     {
         return view('livewire.components.select2');
+    }
+
+    public function setSubunit($value)
+    {
+        $this->kodeSubunit = $value;
     }
 }

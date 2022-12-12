@@ -8,13 +8,13 @@
             <option value="{{ $val->kd_sub_unit }}">{{ $val->nama_sub_unit }}</option>
             @endforeach
         </select>
-        <x-jet-input-error for="bagianFarmasi.kd_sub_unit" class="mt-2" />
+        <x-jet-input-error for="kodeSubunit" class="mt-2" />
     </div>
 </div>
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('#kd-sub-unit').select2({
+        var subunit_select2 = $('#kd-sub-unit').select2({
             width: "100%",
             allowClear: true,
         });
@@ -22,6 +22,7 @@
             var data = $('#kd-sub-unit').select2("val");
             @this.emit('getSubunit', data);
         });
+        subunit_select2.val({{$kodeSubunit}});
     });
 </script>
 @endpush

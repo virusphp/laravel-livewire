@@ -8,6 +8,32 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="p-2 sm:px-10 bg-white border-b border-gray-200 ">
+                @if(session()->has('message'))
+                <div id="alert-3" class="flex p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200 relative"
+                    x-data="{show: true}" x-show="show" role="alert ">
+                    <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-green-700 dark:text-green-800"
+                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div class="ml-3 text-sm font-medium text-green-700 dark:text-green-800">
+                        {{ session('message') }}
+                    </div>
+                    <button type="button" @click="show = false"
+                        class="ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-green-200 dark:text-green-600 dark:hover:bg-green-300"
+                        data-dismiss-target="#alert-3" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                @endif
                 <div class="mt-2 text-2xl font-bold uppercase flex justify-between">
                     <div>
                         Depo dan Anfrah
@@ -70,12 +96,12 @@
                                         {!! $val->statusLabel() !!}
                                     </td>
                                     <td class="py-4 px-6 text-right">
-                                        <x-jet-button wire:click="confirmEdit({{ $val->kdbagian }})"
+                                        <x-jet-button wire:click="confirmEdit('{{ $val->kdbagian }}')"
                                             class="bg-orange-500 hover:bg-orange-700">
                                             Edit
                                         </x-jet-button>
                                         <x-jet-danger-button class="ml-3"
-                                            wire:click="confirmDelete({{ $val->kdbagian }})"
+                                            wire:click="confirmDelete('{{ $val->kdbagian }}')"
                                             wire:loading.attr="disabled">
                                             {{ __('Delete') }}
                                         </x-jet-danger-button>
@@ -107,7 +133,7 @@
                                 {{ __('Cancel') }}
                             </x-jet-secondary-button>
 
-                            <x-jet-danger-button class="ml-3" wire:click="deleteDepo( {{$confirmationDelete}} )"
+                            <x-jet-danger-button class="ml-3" wire:click="deleteDepo('{{$confirmationDelete}}')"
                                 wire:loading.attr="disabled">
                                 {{ __('Delete') }}
                             </x-jet-danger-button>
@@ -121,19 +147,13 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <div class="col-span-6 sm:col-span-4">
-                                <x-jet-label for="kdbagian" value="{{ __('Kode Bagian') }}" />
-                                <x-jet-input id="kdbagian" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="bagianFarmasi.kdbagian" />
-                                <x-jet-input-error for="bagianFarmasi.kdbagian" class="mt-2" />
-                            </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
                                 <x-jet-label for="nmbagian" value="{{ __('Nama Bagian') }}" />
                                 <x-jet-input id="nmbagian" type="text" class="mt-1 block w-full"
                                     wire:model.defer="bagianFarmasi.nmbagian" />
                                 <x-jet-input-error for="bagianFarmasi.nmbagian" class="mt-2" />
                             </div>
-                            @livewire('components.select2')
+                            @livewire('components.select2', ['kodeSubunit' => $kodeSubunit])
 
                             <div class="col-span-6 sm:col-span-4 mt-2">
                                 <x-jet-label for="status_apotik" value="{{ __('Status Apotik') }}" />

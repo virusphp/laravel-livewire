@@ -18,8 +18,10 @@ class BagianIndex extends Component
     public $bagianFarmasi;
     public $sortBy = 'kdbagian';
     public $sortAsc = true;
+    public $statusAktif;
+    public $kodeSubunit;
 
-    public $confirmationDelete = false;
+    public $confirmationDelete;
     public $confirmationAdd = false;
 
     protected $listeners = [
@@ -34,10 +36,9 @@ class BagianIndex extends Component
     ];
 
     protected $rules = [
-        'bagianFarmasi.kdbagian' => 'required|min:2',
         'bagianFarmasi.nmbagian' => 'required|min:5',
         'bagianFarmasi.kd_sub_unit' => 'required',
-        'bagianFarmasi.status_apotik' => 'number',
+        'bagianFarmasi.status_apotik' => 'boolean',
     ];
 
     public function sortBy($field)
@@ -63,9 +64,9 @@ class BagianIndex extends Component
         $this->bagianFarmasi['kd_sub_unit'] = $value;
     }
 
-    public function confirmDelete($id)
+    public function confirmDelete($kdbagian)
     {
-        $this->confirmationDelete = $id;
+        $this->confirmationDelete = $kdbagian;
     }
 
     public function confirmAdd()
@@ -76,8 +77,9 @@ class BagianIndex extends Component
 
     public function confirmEdit(BagianFarmasi $bagianFarmasi)
     {
+        $bagianFarmasi->status_apotik = $bagianFarmasi->status_apotik == "1" ? true : false;;
+        $this->emitTo('components.select2', 'setSubunit', $bagianFarmasi->kd_sub_unit);
         $this->bagianFarmasi = $bagianFarmasi;
-        // dd($bagianFarmasi);
         $this->confirmationAdd = true;
     }
 
@@ -85,18 +87,43 @@ class BagianIndex extends Component
     {
         $bagianFarmasi->delete();
         $this->confirmationDelete = false;
+        session()->flash('message', 'Unit Bagian Farmasi Berhsil di dihapus');
     }
 
     public function saveDepo()
     {
+        // dd($this->bagianFarmasi);
         $this->validate();
-        BagianFarmasi::create([
-            "kdbagian" => $this->bagianFarmasi['kdbagian'],
-            "nmbagian" => $this->bagianFarmasi['nmbagian'],
-            "kd_sub_unit" => $this->bagianFarmasi['kd_sub_unit'],
-            "status_apotik" => $this->bagianFarmasi['status_apotik'] ?? 0,
-        ]);
+        if ( isset($this->bagianFarmasi->kdbagian)) {
+            $this->bagianFarmasi->save();
+            session()->flash('message', 'Unit Bagian Farmasi Berhsil di simpan');
+        } else {
+            BagianFarmasi::create([
+                "kdbagian" => $this->getAutomatedCode(),
+                "nmbagian" => $this->bagianFarmasi['nmbagian'],
+                "kd_sub_unit" => $this->bagianFarmasi['kd_sub_unit'],
+                "status_apotik" => $this->statusApotik ?? 0,
+            ]);
+            session()->flash('message', 'Unit Bagian Farmasi Berhsil di tambah');
+        }
         $this->confirmationAdd = false;
+    }
+
+    private function getAutomatedCode()
+    {
+        $prefix = "BAG";
+        $maxNumber = BagianFarmasi::maxNumber($prefix)->max('kdbagian');
+        if(!$maxNumber) {
+            $start = 1;
+            $noUrut = $prefix . sprintf("%04s", $start);
+
+            return $noUrut;
+        }
+
+        $noUrut = (int) substr(trim($maxNumber), -4);
+        $noUrut++;
+        $newNoUrut = $prefix. sprintf("%04s", $noUrut);
+        return $newNoUrut;
     }
 
     public function render()

@@ -15,6 +15,8 @@ class BagianFarmasi extends Model
 
     protected $primaryKey = "kdbagian";
 
+    protected $keyType = "string";
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -38,6 +40,11 @@ class BagianFarmasi extends Model
     public function scopeUrut($query, $sortBy, $sortAsc)
     {
         return $query->orderBy($sortBy, $sortAsc  ? 'ASC' : 'DESC');
+    }
+
+    public function scopeMaxNumber($query, $prefix)
+    {
+        return $query->where('kdbagian', 'like', $prefix. '%');
     }
 
     public function statusLabel()
