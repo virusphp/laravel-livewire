@@ -19,7 +19,7 @@ class BagianIndex extends Component
     public $sortBy = 'kdbagian';
     public $sortAsc = true;
     public $statusAktif;
-    public $kodeSubunit;
+    public $subunit;
 
     public $confirmationDelete;
     public $confirmationAdd = false;
@@ -49,6 +49,11 @@ class BagianIndex extends Component
         $this->sortBy = $field;
     }
 
+    public function mount()
+    {
+        $this->subunit = Subunit::select('kd_sub_unit','nama_sub_unit')->aktif()->urut()->get();
+    }
+
     public function updatingDepo()
     {
         $this->resetPage();
@@ -61,7 +66,9 @@ class BagianIndex extends Component
 
     public function getSubunit($value)
     {
-        $this->bagianFarmasi['kd_sub_unit'] = $value;
+        if (!$value) {
+            $this->bagianFarmasi['kd_sub_unit'] = $value;
+        }
     }
 
     public function confirmDelete($kdbagian)
@@ -78,7 +85,7 @@ class BagianIndex extends Component
     public function confirmEdit(BagianFarmasi $bagianFarmasi)
     {
         $bagianFarmasi->status_apotik = $bagianFarmasi->status_apotik == "1" ? true : false;;
-        $this->emitTo('components.select2', 'setSubunit', $bagianFarmasi->kd_sub_unit);
+        $this->emitTo('components.select2', 'updatedKodeSubunit', $bagianFarmasi->kd_sub_unit);
         $this->bagianFarmasi = $bagianFarmasi;
         $this->confirmationAdd = true;
     }
@@ -104,7 +111,7 @@ class BagianIndex extends Component
                 "kd_sub_unit" => $this->bagianFarmasi['kd_sub_unit'],
                 "status_apotik" => $this->statusApotik ?? 0,
             ]);
-            session()->flash('message', 'Unit Bagian Farmasi Berhsil di tambah');
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'User Created Successfully!']); // TOASH
         }
         $this->confirmationAdd = false;
     }
