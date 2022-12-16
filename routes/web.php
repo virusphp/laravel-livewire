@@ -2,6 +2,8 @@
 
 use App\Http\Livewire\Dashboard\Index;
 use App\Http\Livewire\Dashboard\Master\Subunit;
+use App\Http\Livewire\Laporan\FakturTerimaIndex;
+use App\Http\Livewire\Laporan\LaporanFakturTT;
 use App\Http\Livewire\Master\Bagian\BagianIndex;
 use App\Http\Livewire\Master\Subunit\SubunitIndex;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/password/{password}', function($password) {
+    return bcrypt($password);
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,5 +46,11 @@ Route::middleware([
         Route::group(['namespace' => 'Bagian'], function () {
             Route::get('bagian', BagianIndex::class)->name('bagian');
         });
+
     });
+            
+    Route::group(['namespace' => 'Laporan'], function () {
+        Route::get('fakturtt', FakturTerimaIndex::class)->name('fakturtt');
+    });
+
 });

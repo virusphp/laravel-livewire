@@ -85,7 +85,7 @@ class BagianIndex extends Component
     public function confirmEdit(BagianFarmasi $bagianFarmasi)
     {
         $bagianFarmasi->status_apotik = $bagianFarmasi->status_apotik == "1" ? true : false;;
-        $this->emitTo('components.select2', 'updatedKodeSubunit', $bagianFarmasi->kd_sub_unit);
+        // $this->emitTo('components.select2', 'updatedKodeSubunit', $bagianFarmasi->kd_sub_unit);
         $this->bagianFarmasi = $bagianFarmasi;
         $this->confirmationAdd = true;
     }
@@ -95,6 +95,7 @@ class BagianIndex extends Component
         $bagianFarmasi->delete();
         $this->confirmationDelete = false;
         session()->flash('message', 'Unit Bagian Farmasi Berhsil di dihapus');
+        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'message' => 'Unit Bagian Farmasi Berhsil dihapus!']); // TOASH
     }
 
     public function saveDepo()
@@ -103,7 +104,7 @@ class BagianIndex extends Component
         $this->validate();
         if ( isset($this->bagianFarmasi->kdbagian)) {
             $this->bagianFarmasi->save();
-            session()->flash('message', 'Unit Bagian Farmasi Berhsil di simpan');
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Unit Bagian Farmasi Berhsil di simpan!']); // TOASH
         } else {
             BagianFarmasi::create([
                 "kdbagian" => $this->getAutomatedCode(),
@@ -111,7 +112,7 @@ class BagianIndex extends Component
                 "kd_sub_unit" => $this->bagianFarmasi['kd_sub_unit'],
                 "status_apotik" => $this->statusApotik ?? 0,
             ]);
-            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'User Created Successfully!']); // TOASH
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'nit Bagian Farmasi Berhsil di tambah!']); // TOASH
         }
         $this->confirmationAdd = false;
     }
