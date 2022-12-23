@@ -1,6 +1,6 @@
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Laporan Faktur TT') }}
+        {{ __('Laporan Tanda Terima') }}
     </h2>
 </x-slot>
 
@@ -36,7 +36,7 @@
                 @endif
                 <div class="mt-2 text-2xl font-bold uppercase flex justify-between">
                     <div>
-                        Faktu Tanda Terima
+                        Tanda Terima
                     </div>
                     <div class="mr-2">
 
@@ -44,13 +44,26 @@
                 </div>
 
                 <div class="mt-2 text-gray-500">
-                    <div class="flex justify-between py-2">
-                        <div>
+                    <div class="flex justify-items-start py-4">
+                        <div class="mr-2">
                             <input type="search" wire:model.debounce.300ms="search" placeholder="Search..."
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
-                        <div class="mr-2">
-                            <input type="checkbox" class="mr-2 leading-tight" wire:model="depo">Depo Only
+                        <div class="">
+                            {{-- <div class="relative">
+                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <input datepicker type="text" id="tanggal-datepicker"
+                                    wire:model.debounce.300ms="tanggal"
+                                    class="bg-gray-50 border mb-3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                                    placeholder="Select date">
+                            </div> --}}
                         </div>
                     </div>
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -60,18 +73,10 @@
                                 <tr>
                                     <th scope="col" class="py-1 px-1 font-bold">
                                         NOTA SP
-                                        {{-- <button wire:click="sortBy('notasp')">NOTA SP </buttcon>
-                                            <x-sort-icon sortField="notasp" :sort-by="$sortBy" :sort-asc="$sortAsc" />
-                                            --}}
-                                    </th>
-                                    <th scope="col" class="py-1 px-1">
-                                        NO FAKTUR
+
                                     </th>
                                     <th scope="col" class="py-1 px-1">
                                         Tanggal
-                                        {{-- <button wire:click="sortBy('tanggal')">TANGGAL </button> --}}
-                                        {{--
-                                        <x-sort-icon sortField="tanggal" :sort-by="$sortBy" :sort-asc="$sortAsc" /> --}}
                                     </th>
                                     <th scope="col" class="py-1 px-1 ">
                                         <div class="flex items-center">
@@ -86,10 +91,6 @@
                                     </th>
                                     <th scope="col" class="py-2 px-1">
                                         Nama Barang
-                                        {{-- <button wire:click="sortBy('nama_barang')">NAMA BARANG </button> --}}
-                                        {{--
-                                        <x-sort-icon sortField="nama_barang" :sort-by="$sortBy" :sort-asc="$sortAsc" />
-                                        --}}
                                     </th>
                                     <th scope="col" class="py-1 px-1">
                                         Harga
@@ -119,26 +120,20 @@
                                         Jumlah K (Satuan)
                                     </th>
                                     <th scope="col" class="py-1 px-1">
-                                        Harga Net
+                                        Nota TT
                                     </th>
                                     <th scope="col" class="py-1 px-1">
-                                        Harga Jual
-                                    </th>
-                                    <th scope="col" class="py-1 px-1">
-                                        Harga Jual (PPN)
+                                        Status Faktur
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="text-xs">
-                                @foreach($dataFakturTT as $val)
+                                @foreach($dataTandaTerima as $val)
                                 <tr
                                     class="bg-white font-thin border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" class="py-1 px-1 font-thin text-gray-900 dark:text-white">
                                         {{ $val->nota_sp }}
                                     </th>
-                                    <td class="py-1 px-1">
-                                        {{ $val->no_faktur }}
-                                    </td>
                                     <td class="py-1 px-1">
                                         {{ tanggalFormat($val->tanggal) }}
                                     </td>
@@ -183,13 +178,10 @@
                                         {{ $val->jumlah_kecil }} {{ $val->satuan_kecil }}
                                     </td>
                                     <td class="py-1 px-1">
-                                        {{ rupiah($val->harga_netto_kecil) }}
+                                        {{ $val->nota_tt }}
                                     </td>
                                     <td class="py-1 px-1">
-                                        {{ rupiah($val->harga_jual) }}
-                                    </td>
-                                    <td class="py-1 px-1">
-                                        {{ rupiah($val->harga_jual_ppn) }}
+                                        {{ statusFaktur($val->status_faktur) }}
                                     </td>
                                 </tr>
                                 {{-- @if ($loop->last)
@@ -198,12 +190,12 @@
                                 @endforeach
                             </tbody>
                             <tfoot>
-                                @include ('livewire.laporan.total', compact('dataFakturTT'))
+                                @include ('livewire.laporan.total-tt', compact('dataTandaTerima'))
                             </tfoot>
                         </table>
                     </div>
                     <div class="py-3">
-                        {{ $dataFakturTT->appends(['search' => 'search'])->render() }}
+                        {{ $dataTandaTerima->appends(['search' => 'search'])->render() }}
                     </div>
 
                 </div>

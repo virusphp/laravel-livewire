@@ -14,6 +14,10 @@ function uang($nilai) {
     return number_format($nilai, 0, ",",".");
 }
 
+function persen($nilai) {
+    return number_format($nilai, 2, ",",".");
+}
+
 function tanggalFormat($nilai)
 {
     return date('Y-m-d', strtotime($nilai));
@@ -24,4 +28,9 @@ function barangFormat($nilai)
 	//  $words = substr_replace($nilai, "xxxxx",-3,5);
 	$words = str_replace("NW00", "", $nilai);
     return $words;
+}
+
+function statusFaktur($nilai)
+{
+    return $nilai == 2 ? "Sudah" : "Belum";
 }

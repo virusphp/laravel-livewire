@@ -4,6 +4,7 @@ use App\Http\Livewire\Dashboard\Index;
 use App\Http\Livewire\Dashboard\Master\Subunit;
 use App\Http\Livewire\Laporan\FakturTerimaIndex;
 use App\Http\Livewire\Laporan\LaporanFakturTT;
+use App\Http\Livewire\Laporan\TandaTerimaIndex;
 use App\Http\Livewire\Master\Bagian\BagianIndex;
 use App\Http\Livewire\Master\Subunit\SubunitIndex;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,7 @@ Route::middleware([
             
     Route::group(['namespace' => 'Laporan'], function () {
         Route::get('fakturtt', FakturTerimaIndex::class)->name('fakturtt');
+        Route::get('tandaterima', TandaTerimaIndex::class)->name('tandaterima');
     });
 
 });

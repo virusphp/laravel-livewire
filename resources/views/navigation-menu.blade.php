@@ -83,6 +83,10 @@
                                     {{ __('Laporan Faktur TT') }}
                                 </x-jet-dropdown-link>
 
+                                <x-jet-dropdown-link href="{{ route('tandaterima') }}"
+                                    :active="request()->routeIs('tandaterima')">
+                                    {{ __('Laporan Tanda Terima') }}
+                                </x-jet-dropdown-link>
                             </div>
                         </x-slot>
 
