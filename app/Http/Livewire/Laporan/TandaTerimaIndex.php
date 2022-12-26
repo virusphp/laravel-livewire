@@ -38,10 +38,14 @@ class TandaTerimaIndex extends Component
                         'ap_belitt.jmlisi as isi', 
                         'ap_belitt.jmlbeli as jumlah_kecil',
                         'ap_belitt.satuan as satuan_kecil',
+                        'ap_belitt.jmlstok as stok_tt',
+                        'ap_beli2.jmlstok as stok_faktur',
                         'ap_belitt.notatt as nota_tt',
                         'ap_belitt.stsdifakturkan as status_faktur'
         ) 
-        ->leftJoin('ap_beli2', 'ap_belitt.notasp','=', 'ap_beli2.notasp')
+        ->leftJoin('ap_beli2',function($join) {
+            $join->on('ap_belitt.notasp','=', 'ap_beli2.notasp');
+        })
         ->pencarian($this->search)
         ->terbaru()
         ->paginate($this->limit);
