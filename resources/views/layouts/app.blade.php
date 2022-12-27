@@ -47,8 +47,9 @@
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
     <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
     @stack('modals')
-
+    @stack('scripts')
     @livewireScripts
+
     <script>
         window.addEventListener('alert', event => {
             toastr[event.detail.type](event.detail.message,

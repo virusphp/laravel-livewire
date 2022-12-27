@@ -26,7 +26,15 @@ class RawatJalan extends Model
     public function scopePencarian($query, $search)
     {
         return $query->when($search, function($q, $search) {
-            $q->where('rawat_jalan.no_rm', 'like', "%{$search}%");
+            $q->where('p.nama_pasien', 'like', "%{$search}%")
+                ->orWhere('rawat_jalan.no_rm', 'like', "%{$search}%");
+        });
+    }
+
+    public function scopeFilter($query, $tanggal)
+    {
+        return $query->when($tanggal, function($q, $tanggal) {
+            $q->whereDate('rawat_jalan.waktu_anamnesa', $tanggal);
         });
     }
 }

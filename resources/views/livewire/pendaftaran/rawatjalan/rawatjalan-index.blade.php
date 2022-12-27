@@ -44,13 +44,29 @@
                 </div>
 
                 <div class="mt-2 text-gray-500">
-                    <div class="flex justify-between py-2">
-                        <div>
+                    <div class="flex justify-start py-2">
+                        <div class="mr-2">
                             <input type="search" wire:model.debounce.300ms="search" placeholder="Search..."
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
+                        <div class="relative mr-2">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            {{--
+                            <x-datepicker wire:model="tanggal" id="datepicker" autocomplete="off" /> --}}
+                            <input datepicker datepicker-autohide type="text" id="tanggal-datepicker"
+                                wire:model="tanggal" value="{{tanggal}}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                wire:chagne="tanggal" placeholder="Select date">
+                        </div>
                         <div class="mr-2">
-                            <input type="checkbox" class="mr-2 leading-tight" wire:model="depo">Bpjs Only
+                            <input type="checkbox" class="mr-2 p-2 leading-tight item-center">Bpjs Only
                         </div>
                     </div>
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -70,6 +86,9 @@
                                     <th scope="col" class="py-1 px-1">
                                         POLIKLINIK
                                     </th>
+                                    <th scope="col" class="py-1 px-1">
+                                        BAYAR
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="text-xs">
@@ -88,6 +107,11 @@
                                     <td class="py-1 px-1">
                                         {{ $val->nama_sub_unit }}
                                     </td>
+                                    <td class="py-1 px-1">
+                                        {{ $val->cara_bayar }}
+                                    </td>
+
+
 
                                 </tr>
                                 @endforeach
@@ -103,3 +127,16 @@
         </div>
     </div>
 </div>
+@push('scripts')
+@vite(['resources/js/datepicker.js'])
+<script type="text/javascript">
+    $(document).ready(function () {
+        const datePickerEl = document.getElementById("tanggal-datepicker");
+        datePickerEl.onchange = (e) => {
+            console.log("AKU");
+            @this.set('tanggal', e.target.value);
+            console.log(e.target.value);
+        }
+    });
+</script>
+@endpush
