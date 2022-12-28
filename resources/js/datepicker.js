@@ -5,9 +5,7 @@ const datePickerEl = document.getElementById("tanggal-datepicker");
 new Datepicker(datePickerEl, {
     autohide: true,
     format: "yyyy-mm-dd",
+    defaultDate: new Date(),
 });
 
-datePickerEl.onchange = (e) => {
-    console.log(e.target.value, "DI SINI");
-};
 // @import 'node_modules/pikaday/css/pikaday.css';

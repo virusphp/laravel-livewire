@@ -19,6 +19,7 @@
     @livewireStyles
     {{--
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    @stack('css')
 
 </head>
 
@@ -46,6 +47,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
     <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+    {{-- <script src="{{ asset('../../../node_modules/flowbite/dist/datepicker.js') }}"></script> --}}
     @stack('modals')
     @stack('scripts')
     @livewireScripts

@@ -34,9 +34,10 @@
                     </button>
                 </div>
                 @endif
-                <div class="mt-2 text-2xl font-bold uppercase flex justify-between">
-                    <div>
-                        Pendaftaran Rawat Jalan
+                <div class="mt-2 font-bold uppercase flex justify-between">
+                    <div class="text-2xl">
+                        Daftar
+                        <span class="font-normal">Rawat Jalan</span>
                     </div>
                     <div class="mr-2">
 
@@ -58,15 +59,12 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            {{--
-                            <x-datepicker wire:model="tanggal" id="datepicker" autocomplete="off" /> --}}
-                            <input datepicker datepicker-autohide type="text" id="tanggal-datepicker"
-                                wire:model="tanggal" value="{{tanggal}}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                wire:chagne="tanggal" placeholder="Select date">
+
+                            <x-datepicker wire:model="tanggal" id="datepicker"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         </div>
                         <div class="mr-2">
-                            <input type="checkbox" class="mr-2 p-2 leading-tight item-center">Bpjs Only
+
                         </div>
                     </div>
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -89,6 +87,13 @@
                                     <th scope="col" class="py-1 px-1">
                                         BAYAR
                                     </th>
+                                    <th scope="col" class="py-1 px-1">
+                                        NO SEP
+                                    </th>
+                                    <th scope="col" class="py-1 px-1">
+                                        AKSI
+                                    </th>
+
                                 </tr>
                             </thead>
                             <tbody class="text-xs">
@@ -99,7 +104,7 @@
                                         {{ $val->no_reg }}
                                     </th>
                                     <td class="py-1 px-1">
-                                        {{ $val->no_rm }}
+                                        {!! statusRm($val->no_rm) !!}
                                     </td>
                                     <td class="py-1 px-1">
                                         {{ $val->nama_pasien }}
@@ -110,8 +115,19 @@
                                     <td class="py-1 px-1">
                                         {{ $val->cara_bayar }}
                                     </td>
-
-
+                                    <td class="py-1 px-1">
+                                        {{ $val->no_sep }}
+                                    </td>
+                                    <td class="py-1 px-1">
+                                        <x-jet-button wire:click="confirmCreateSep('{{ $val->no_reg }}')"
+                                            class="p-1 py-1 px-2 bg-purple-500 hover:bg-purple-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                                            </svg>
+                                        </x-jet-button>
+                                    </td>
 
                                 </tr>
                                 @endforeach
@@ -122,21 +138,19 @@
                         {{ $rawatjalan->appends(['search' => 'search'])->render() }}
                     </div>
 
+                    @include('livewire.pendaftaran.rawatjalan.modal-sep')
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+@push('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('build/public/css/pikaday.css') }}">
+@endpush
 @push('scripts')
-@vite(['resources/js/datepicker.js'])
-<script type="text/javascript">
-    $(document).ready(function () {
-        const datePickerEl = document.getElementById("tanggal-datepicker");
-        datePickerEl.onchange = (e) => {
-            console.log("AKU");
-            @this.set('tanggal', e.target.value);
-            console.log(e.target.value);
-        }
-    });
-</script>
+{{-- @vite('resources/js/datepicker.js') --}}
+<script src="{{ asset('plugins/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('build/public/js/pikaday.js') }}"></script>
+
 @endpush
