@@ -5,9 +5,10 @@
 	</x-slot>
 
 	<x-slot name="content">
-		<div
-			class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-			<form class="space-y-6" action="#">
+		<form class="space-y-0 flex justify-between" action="#">
+			{{-- Form Profile Pasien --}}
+			<div
+				class="w-full max-w-sm p-3 mr-1 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
 				<div class="grid md:grid-cols-2 md:gap-6">
 					<div class="relative z-0 mb-1 w-full group">
 						<x-jet-label for="no_reg" value="{{ __('No Registrasi') }}" />
@@ -39,14 +40,251 @@
 						<x-jet-input-error for="pasien.nama_pasien" class="mt-0" />
 					</div>
 				</div>
+
 				<div class="relative z-0 mb-1 w-full group">
 					<x-jet-label for="alamat" value="{{ __('Alamat') }}" />
 					<x-jet-input id="alamat" type="text" class="mt-0 text-xs block w-full"
 						wire:model.defer="pasien.alamat" />
 					<x-jet-input-error for="pasien.alamat" class="mt-0" />
 				</div>
-			</form>
-		</div>
+
+				<div class="grid md:grid-cols-2 md:gap-6">
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="kelas_rawat" value="{{ __('Hak Kelas') }}" />
+						<x-jet-input id="kelas-rawat" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.kelas_rawat" />
+						<x-jet-input-error for="pasien.kelas_rawat" class="mt-0" />
+					</div>
+
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="status_peserta" value="{{ __('Status Peserta') }}" />
+						<x-jet-input id="no-reg" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.status_peserta" />
+						<x-jet-input-error for="pasien.status_peserta" class="mt-0" />
+					</div>
+				</div>
+
+				<div class="relative z-0 mb-1 w-full group">
+					<x-jet-label for="cara_bayar" value="{{ __('Cara Bayar') }}" />
+					<x-jet-input id="alamat" type="text" class="mt-0 text-xs block w-full"
+						wire:model.defer="pasien.cara_bayar" />
+					<x-jet-input-error for="pasien.cara_bayar" class="mt-0" />
+				</div>
+
+				<div class="relative z-0 mb-1 w-full group">
+					<x-jet-label for="kd_asal_pasien" value="{{ __('Asal Pasien') }}" />
+					<x-jet-input id="alamat" type="text" class="mt-0 text-xs block w-full"
+						wire:model.defer="pasien.kd_asal_pasien" />
+					<x-jet-input-error for="pasien.kd_asal_pasien" class="mt-0" />
+				</div>
+
+			</div>
+
+			{{-- Form Sep --}}
+			<div
+				class="w-full max-w-4xl p-3 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+				<div class="grid md:grid-cols-3 md:gap-6">
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="no_kartu" value="{{ __('Nomor Kartu') }}" />
+						<x-jet-input id="no-kartu" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.no_kartu" />
+						<x-jet-input-error for="pasien.no_kartu" class="mt-0" />
+					</div>
+
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="no_rm" value="{{ __('No Rekemedik') }}" />
+						<x-jet-input id="no-rm" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.no_rm" />
+						<x-jet-input-error for="pasien.no_rm" class="mt-0" />
+					</div>
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="tanggal_sep" value="{{ __('Tanggal Registrasi') }}" />
+						<x-jet-input id="tanggal-sep" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.tanggal_sep" />
+						<x-jet-input-error for="pasien.tanggal_sep" class="mt-0" />
+					</div>
+				</div>
+
+				<div class="grid md:grid-cols-3 md:gap-6">
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="no_rujukan" value="{{ __('No Rujukan') }}" />
+						<x-jet-input id="no-rujukan" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.no_rujukan" />
+						<x-jet-input-error for="pasien.no_rujukan" class="mt-0" />
+					</div>
+
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="asal_rujukan" value="{{ __('Asal Rujukan') }}" />
+						<x-jet-input id="asal-rujukan" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.asal_rujukan" />
+						<x-jet-input-error for="pasien.asal_rujukan" class="mt-0" />
+					</div>
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="ppk_rujukan" value="{{ __('PPK Rujukan / Perujuk') }}" />
+						<x-jet-input id="ppk-rujukan" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.ppk_rujukan" />
+						<x-jet-input-error for="pasien.ppk_rujukan" class="mt-0" />
+					</div>
+				</div>
+
+				<div class="grid md:grid-cols-3 md:gap-6">
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="diagnosa" value="{{ __('Diagnosa') }}" />
+						<x-jet-input id="diagnosa" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.diagnosa" />
+						<x-jet-input-error for="pasien.diagnosa" class="mt-0" />
+					</div>
+
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="tujuan_poli" value="{{ __('Tujuan Poli') }}" />
+						<x-jet-input id="tujuan-poli" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.status_peserta" />
+						<x-jet-input-error for="pasien.status_peserta" class="mt-0" />
+					</div>
+
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="no_telp" value="{{ __('No Telpon') }}" />
+						<x-jet-input id="no-telp" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.no_telp" />
+						<x-jet-input-error for="pasien.no_telp" class="mt-0" />
+					</div>
+				</div>
+
+				<div class="relative z-0 mb-1 w-60 group">
+					<x-jet-label for="tujuan_kunjungan" value="{{ __('Tujuan Kunjungan') }}" />
+					<select wire:model.defer="pasien.tujuan_kunjungan" id="tujuan-kunjungan" name="tujuan_kunjungan"
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+						<option value="">- Pilih tujuan kunjungan -</option>
+						<option value="0">Normal (Kunjungan Pertama)</option>
+						<option value="1">Prosedur</option>
+						<option value="2">Konsul Dokter</option>
+					</select>
+					<x-jet-input-error for="pasien.tujuan_kunjungan" class="mt-0" />
+				</div>
+
+				<div class="relative z-0 mb-1 w-60 group {{ $assesmentPelayanan == true ? '' : 'hidden' }}">
+					<x-jet-label for="assesment_pelayanan" value="{{ __('Assesment Pelayanan') }}" />
+					<select wire:model.defer="pasien.assesment_pelayanan" id="assesment-pelayanan"
+						name="tujuan_kunjungan"
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+						<option value="">- Pilih Assesment -</option>
+						@foreach($dataAssesmentPelayanan as $val)
+						<option value="{{ $val->kode }}" wire:key="{{ $val->kode }}">{{ $val->nama }}
+						</option>
+						@endforeach
+					</select>
+					<x-jet-input-error for="pasien.assesment_pelayanan" class="mt-0" />
+				</div>
+
+				<div class="grid md:grid-cols-3 md:gap-6 {{ $prosedure == true ? '' : 'hidden' }}">
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="prosedur" value="{{ __('Prosedur') }}" />
+						<select wire:model.defer="pasien.prosedur" id="prosedur"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+							<option value="">- Pilih prosedur -</option>
+							@foreach($dataProsedur as $val)
+							<option value="{{ $val->kode }}" wire:key="{{ $val->kode }}">{{ $val->nama }}
+							</option>
+							@endforeach
+						</select>
+						<x-jet-input-error for="pasien.prosedur" class="mt-0" />
+					</div>
+
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="penunjang" value="{{ __('Penunjang') }}" />
+						<select wire:model.defer="pasien.prosedur" id="prosedur"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+							<option value="">- Pilih penunjang -</option>
+							@foreach($dataPenunjang as $val)
+							<option value="{{ $val->kode }}" wire:key="{{ $val->kode }}">{{ $val->nama }}
+							</option>
+							@endforeach
+						</select>
+						<x-jet-input-error for="pasien.penunjang" class="mt-0" />
+					</div>
+				</div>
+
+				<div class="{{ $dpjp == true ? 'grid': 'hidden' }} md:grid-cols-3 md:gap-6">
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="no_surat" value="{{ __('No Surat') }}" />
+						<x-jet-input id="no-surat" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.no_surat" />
+						<x-jet-input-error for="pasien.no_surat" class="mt-0" />
+					</div>
+
+					<div class="relative z-0 mb-1 col-span-2 w-full group">
+						<x-jet-label for="dpjp_pemberisurat" value="{{ __('DPJP Pemberi surat / SKDP') }}" />
+						<x-jet-input id="dpjp_pemberisurat" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.dpjp_pemberisurat" />
+						<x-jet-input-error for="pasien.dpjp_pemberisurat" class="mt-0" />
+					</div>
+				</div>
+
+				<div class="relative z-0 mb-1 w-full group">
+					<x-jet-label for="catatan" value="{{ __('Catatan') }}" />
+					<x-jet-input id="catatan" type="text" class="mt-0 text-xs block w-full"
+						wire:model.defer="pasien.catatan" />
+					<x-jet-input-error for="pasien.catatan" class="mt-0" />
+				</div>
+
+				<div class="{{ $lakaLantas == true ? '' : 'hidden' }}">
+					<div class="grid md:grid-cols-3 md:gap-6">
+						<div class="relative z-0 mb-1 w-full group">
+							<x-jet-label for="tanggal_kejadian" value="{{ __('Tanggal Kejadian') }}" />
+							<x-jet-input id="tanggal-kejadian" type="text" class="mt-0 text-xs block w-full"
+								wire:model.defer="pasien.tanggal_kejadian" />
+							<x-jet-input-error for="pasien.tanggal_kejadian" class="mt-0" />
+						</div>
+
+						<div class="relative z-0 mb-1 w-full group">
+							<x-jet-label for="suplesi" value="{{ __('Suplesi') }}" />
+							<x-jet-input id="suplesi" type="text" class="mt-0 text-xs block w-full"
+								wire:model.defer="pasien.suplesi" />
+							<x-jet-input-error for="pasien.suplesi" class="mt-0" />
+						</div>
+
+						<div class="relative z-0 mb-1 w-full group">
+							<x-jet-label for="no_sep_suplesi" value="{{ __('No Sep Suplesi') }}" />
+							<x-jet-input id="no-sep-suplesi" type="text" class="mt-0 text-xs block w-full"
+								wire:model.defer="pasien.no_sep_suplesi" />
+							<x-jet-input-error for="pasien.no_sep_suplesi" class="mt-0" />
+						</div>
+					</div>
+
+					<div class="grid md:grid-cols-3 md:gap-6">
+						<div class="relative z-0 mb-1 w-full group">
+							<x-jet-label for="propinsi" value="{{ __('Propinsi') }}" />
+							<x-jet-input id="propinsi" type="text" class="mt-0 text-xs block w-full"
+								wire:model.defer="pasien.propinsi" />
+							<x-jet-input-error for="pasien.propinsi" class="mt-0" />
+						</div>
+
+						<div class="relative z-0 mb-1 w-full group">
+							<x-jet-label for="kabupaten" value="{{ __('Kabupaten') }}" />
+							<x-jet-input id="kabupaten" type="text" class="mt-0 text-xs block w-full"
+								wire:model.defer="pasien.kabupaten" />
+							<x-jet-input-error for="pasien.kabupaten" class="mt-0" />
+						</div>
+
+						<div class="relative z-0 mb-1 w-full group">
+							<x-jet-label for="kecamatan" value="{{ __('Kecamatan') }}" />
+							<x-jet-input id="kecamatan" type="text" class="mt-0 text-xs block w-full"
+								wire:model.defer="pasien.kecamatan" />
+							<x-jet-input-error for="pasien.kecamatan" class="mt-0" />
+						</div>
+					</div>
+
+					<div class="relative z-0 mb-1 w-full group">
+						<x-jet-label for="keterangan" value="{{ __('Keterangan') }}" />
+						<x-jet-input id="catatan" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.keterangan" />
+						<x-jet-input-error for="pasien.keterangan" class="mt-0" />
+					</div>
+				</div>
+
+			</div>
+
+		</form>
 	</x-slot>
 
 	<x-slot name="footer">

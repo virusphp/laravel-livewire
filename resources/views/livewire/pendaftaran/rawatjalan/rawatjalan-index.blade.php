@@ -97,7 +97,7 @@
                                 </tr>
                             </thead>
                             <tbody class="text-xs">
-                                @foreach($rawatjalan as $val)
+                                @foreach($dataRawatJalan as $val)
                                 <tr
                                     class="bg-white font-thin border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" class="py-1 px-1 font-thin text-gray-900 dark:text-white">
@@ -135,9 +135,8 @@
                         </table>
                     </div>
                     <div class="py-3">
-                        {{ $rawatjalan->appends(['search' => 'search'])->render() }}
+                        {{ $dataRawatJalan->appends(['search' => 'search'])->render() }}
                     </div>
-
                     @include('livewire.pendaftaran.rawatjalan.modal-sep')
 
                 </div>

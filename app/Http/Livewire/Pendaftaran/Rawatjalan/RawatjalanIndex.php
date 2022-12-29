@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Pendaftaran\Rawatjalan;
 
+use App\Models\AssesmentPelayanan;
+use App\Models\FlagProsedur;
+use App\Models\Penunjang;
 use App\Models\RawatJalan;
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,6 +18,11 @@ class RawatjalanIndex extends Component
     public $search;
     public $tanggal;
     public $limit = 25;
+
+    public $dpjp = false;
+    public $lakaLantas = false;
+    public $assesmentPelayanan = true;
+    public $prosedure = false;
 
     public $pasien;
     public $penjamin;
@@ -42,7 +49,10 @@ class RawatjalanIndex extends Component
     public function render()
     {
         // dd($this->tanggal);
-        $rawatjalan = RawatJalan::select(
+        $dataProsedur = FlagProsedur::select('kode_flag_prosedur as kode', 'nama_flag_prosedur as nama')->get();
+        $dataAssesmentPelayanan = AssesmentPelayanan::select('kode_assesment_pelayanan as kode', 'nama_assesment_pelayanan as nama')->get();
+        $dataPenunjang = Penunjang::select('kode_penunjang as kode', 'nama_penunjang as nama')->get();
+        $dataRawatJalan = RawatJalan::select(
             'rawat_jalan.no_reg',
             'rawat_jalan.no_rm',
             'p.nama_pasien',
@@ -59,7 +69,7 @@ class RawatjalanIndex extends Component
         ->pencarian($this->search)
         ->paginate($this->limit);
 
-        return view('livewire.pendaftaran.rawatjalan.rawatjalan-index', compact('rawatjalan'));
+        return view('livewire.pendaftaran.rawatjalan.rawatjalan-index', compact('dataRawatJalan', 'dataProsedur', 'dataAssesmentPelayanan', 'dataPenunjang'));
     }
 
 }
