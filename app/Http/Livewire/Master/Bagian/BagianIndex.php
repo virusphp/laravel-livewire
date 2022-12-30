@@ -87,6 +87,7 @@ class BagianIndex extends Component
         $bagianFarmasi->status_apotik = $bagianFarmasi->status_apotik == "1" ? true : false;;
         // $this->emitTo('components.select2', 'updatedKodeSubunit', $bagianFarmasi->kd_sub_unit);
         $this->bagianFarmasi = $bagianFarmasi;
+        dd($this->bagianFarmasi);
         $this->confirmationAdd = true;
     }
 

@@ -17,6 +17,9 @@ class RawatJalan extends Model
 
     protected $keyType = "string";
 
+    protected $fillable = [
+        'no_reg'
+    ];
 
     public function pasien()
     {

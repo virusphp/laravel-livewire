@@ -1,7 +1,7 @@
 {{-- Model Confirmasi Add --}}
 <x-jet-dialog-modal maxWidth="screen-lg" wire:model="confirmationCreateSep">
 	<x-slot name="title">
-		{{ isset( $this->pasien->no_reg) ? 'Edit Pembuatan Sep' : 'Create Pembuatan Sep' }}
+		{{ isset( $this->pasien->no_sep) ? 'Edit Pembuatan Sep' : 'Create Pembuatan Sep' }}
 	</x-slot>
 
 	<x-slot name="content">
@@ -34,10 +34,10 @@
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="nama_pasien" value="{{ __('Nama Pasien') }}" />
-						<x-jet-input id="no-reg" type="text" class="mt-0 text-xs block w-full"
-							wire:model.defer="pasien.nama_pasien" />
-						<x-jet-input-error for="pasien.nama_pasien" class="mt-0" />
+						<x-jet-label for="tanggal_lahir" value="{{ __('Tanggal Lahir') }}" />
+						<x-jet-input id="tanggal-lahir" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.tanggal_lahir" />
+						<x-jet-input-error for="pasien.tanggal_lahir" class="mt-0" />
 					</div>
 				</div>
 
@@ -115,8 +115,12 @@
 
 					<div class="relative z-0 mb-1 w-full group">
 						<x-jet-label for="asal_rujukan" value="{{ __('Asal Rujukan') }}" />
-						<x-jet-input id="asal-rujukan" type="text" class="mt-0 text-xs block w-full"
-							wire:model.defer="pasien.asal_rujukan" />
+						<select id="asal-rujukan" name="asal_rujukan" wire.model.defer="pasien.asal_rujukan"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							required>
+							<option value="1">Faskes Tingkat 1</option>
+							<option value="2">Faskes Tingkat 2</option>
+						</select>
 						<x-jet-input-error for="pasien.asal_rujukan" class="mt-0" />
 					</div>
 					<div class="relative z-0 mb-1 w-full group">
@@ -138,8 +142,8 @@
 					<div class="relative z-0 mb-1 w-full group">
 						<x-jet-label for="tujuan_poli" value="{{ __('Tujuan Poli') }}" />
 						<x-jet-input id="tujuan-poli" type="text" class="mt-0 text-xs block w-full"
-							wire:model.defer="pasien.status_peserta" />
-						<x-jet-input-error for="pasien.status_peserta" class="mt-0" />
+							wire:model.defer="pasien.tujuan_poli" />
+						<x-jet-input-error for="pasien.tujuan_poli" class="mt-0" />
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
@@ -165,7 +169,7 @@
 				<div class="relative z-0 mb-1 w-60 group {{ $assesmentPelayanan == true ? '' : 'hidden' }}">
 					<x-jet-label for="assesment_pelayanan" value="{{ __('Assesment Pelayanan') }}" />
 					<select wire:model.defer="pasien.assesment_pelayanan" id="assesment-pelayanan"
-						name="tujuan_kunjungan"
+						name="assesment_pelayanan"
 						class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 						<option value="">- Pilih Assesment -</option>
 						@foreach($dataAssesmentPelayanan as $val)
@@ -192,7 +196,7 @@
 
 					<div class="relative z-0 mb-1 w-full group">
 						<x-jet-label for="penunjang" value="{{ __('Penunjang') }}" />
-						<select wire:model.defer="pasien.prosedur" id="prosedur"
+						<select wire:model.defer="pasien.kode_penunjang" id="prosedur"
 							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 							<option value="">- Pilih penunjang -</option>
 							@foreach($dataPenunjang as $val)
@@ -206,10 +210,10 @@
 
 				<div class="{{ $dpjp == true ? 'grid': 'hidden' }} md:grid-cols-3 md:gap-6">
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="no_surat" value="{{ __('No Surat') }}" />
+						<x-jet-label for="no_surat_kontrol" value="{{ __('No Surat Kontrol') }}" />
 						<x-jet-input id="no-surat" type="text" class="mt-0 text-xs block w-full"
-							wire:model.defer="pasien.no_surat" />
-						<x-jet-input-error for="pasien.no_surat" class="mt-0" />
+							wire:model.defer="pasien.no_surat_kontrol" />
+						<x-jet-input-error for="pasien.no_surat_kontrol" class="mt-0" />
 					</div>
 
 					<div class="relative z-0 mb-1 col-span-2 w-full group">

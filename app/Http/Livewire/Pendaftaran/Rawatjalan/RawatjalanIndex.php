@@ -40,9 +40,69 @@ class RawatjalanIndex extends Component
         $this->tanggal = date('Y-m-d');
     }
 
+    protected $rules = [
+        'pasien.no_reg' => 'required|min:5',
+        'pasien.nama_pasien' => 'required',
+        'pasien.no_ktp' => 'required',
+    ];
+
     public function confirmCreateSep($noRegistrasi)
     {
-        // dd($noRegistrasi);
+        $data = RawatJalan::select(
+                'r.no_reg',
+                'p.nama_pasien',
+                'p.nik as no_ktp',
+                'p.tgl_lahir as tanggal_lahir',
+                'p.alamat',
+                'r.kd_cara_bayar as cara_bayar',
+                'r.kd_asal_pasien',
+                'pp.no_kartu',
+                'r.no_rm',
+                'r.tgl_reg as tanggal_sep',
+                'sep.no_rujukan',
+                'sep.asal_faskes',
+                'sep.nama_faskes',
+                'sep.kd_diagnosa',
+                'sep.nama_diagnosa',
+                'sep.kd_poli as tujuan_poli',
+                'sep.nama_poli',
+                'p.no_telp',
+                'sep.tujuan_kunjungan',
+                'sep.assesment_pelayanan',
+                'sep.flag_prosedur',
+                'sep.kode_penunjang',
+                'sep.no_surat_kontrol',
+                'sep.kd_dpjp as dpjp_pemberisurat',
+                'sep.catatan',
+                'sep.dpjp_pelayanan',
+                'cb.keterangan',
+                'r.status_keluar',
+                'r.no_sjp as no_sep',
+                'ru.kd_instansi',
+                'pg.nama_pegawai',
+                'pg.kode_dpjp',
+                'su.kd_poli_dpjp',
+                'su.nama_sub_unit',
+                'sep.tgl_rujukan',
+                'sep.kd_faskes'
+        )
+        ->join('registrasi as r', 'rawat_jalan.no_reg', '=', 'r.no_reg')
+        ->join('pasien as p', 'r.no_rm', '=', 'p.no_rm')
+        ->join('cara_bayar as cb', 'r.kd_cara_bayar', '=', 'cb.kd_cara_bayar')
+        ->join('pegawai as pg', 'rawat_jalan.kd_dokter', 'pg.kd_pegawai')
+        ->join('sub_unit as su', function ($join) {
+            $join->on('rawat_jalan.kd_poliklinik', '=', 'su.kd_sub_unit');
+        })
+        ->join('penjamin_pasien as pp', function ($join) {
+            $join->on('r.no_rm', '=', 'pp.no_rm')
+                ->on('r.kd_penjamin', '=', 'pp.kd_penjamin');
+        })
+        ->leftJoin('rujukan as ru', 'r.no_reg', '=', 'ru.no_reg')
+        ->leftJoin('sep_bpjs as sep', 'ru.no_reg', 'sep.no_reg')
+        ->where('r.no_reg', '=', $noRegistrasi)
+        ->first();
+
+        $this->pasien = $data;
         $this->confirmationCreateSep = true;
     }
 
