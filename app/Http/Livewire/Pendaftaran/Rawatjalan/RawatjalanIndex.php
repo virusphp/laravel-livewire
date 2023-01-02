@@ -44,6 +44,9 @@ class RawatjalanIndex extends Component
         'pasien.no_reg' => 'required|min:5',
         'pasien.nama_pasien' => 'required',
         'pasien.no_ktp' => 'required',
+        'pasien.tanggal_lahir' => 'required',
+        'pasien.alamat' => 'required',
+        'pasien.cara_bayar' => 'required'
     ];
 
     public function confirmCreateSep($noRegistrasi)
@@ -54,7 +57,7 @@ class RawatjalanIndex extends Component
                 'p.nik as no_ktp',
                 'p.tgl_lahir as tanggal_lahir',
                 'p.alamat',
-                'r.kd_cara_bayar as cara_bayar',
+                'cb.keterangan as cara_bayar',
                 'r.kd_asal_pasien',
                 'pp.no_kartu',
                 'r.no_rm',
@@ -75,7 +78,6 @@ class RawatjalanIndex extends Component
                 'sep.kd_dpjp as dpjp_pemberisurat',
                 'sep.catatan',
                 'sep.dpjp_pelayanan',
-                'cb.keterangan',
                 'r.status_keluar',
                 'r.no_sjp as no_sep',
                 'ru.kd_instansi',
