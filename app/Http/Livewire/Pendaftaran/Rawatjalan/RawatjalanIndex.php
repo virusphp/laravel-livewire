@@ -46,7 +46,18 @@ class RawatjalanIndex extends Component
         'pasien.no_ktp' => 'required',
         'pasien.tanggal_lahir' => 'required',
         'pasien.alamat' => 'required',
-        'pasien.cara_bayar' => 'required'
+        'pasien.cara_bayar' => 'required',
+        'pasien.kd_asal_pasien' => 'required',
+        'pasien.asal_pasien' => 'required',
+        'pasien.no_kartu' => 'required',
+        'pasien.no_rm' => 'required',
+        'pasien.tanggal_sep' => 'required',
+        'pasien.no_rujukan' => 'required',
+        'pasien.tujuan_poli' => 'required',
+        'pasien.nama_poli' => 'required',
+        'pasien.kd_faskes' => 'required',
+        'pasien.nama_faskes' => 'required',
+        'pasien.asal_faskes' => 'required',
     ];
 
     public function confirmCreateSep($noRegistrasi)
@@ -58,38 +69,22 @@ class RawatjalanIndex extends Component
                 'p.tgl_lahir as tanggal_lahir',
                 'p.alamat',
                 'cb.keterangan as cara_bayar',
+                'ap.keterangan as asal_pasien',
                 'r.kd_asal_pasien',
                 'pp.no_kartu',
                 'r.no_rm',
                 'r.tgl_reg as tanggal_sep',
-                'sep.no_rujukan',
-                'sep.asal_faskes',
-                'sep.nama_faskes',
-                'sep.kd_diagnosa',
-                'sep.nama_diagnosa',
-                'sep.kd_poli as tujuan_poli',
-                'sep.nama_poli',
                 'p.no_telp',
-                'sep.tujuan_kunjungan',
-                'sep.assesment_pelayanan',
-                'sep.flag_prosedur',
-                'sep.kode_penunjang',
-                'sep.no_surat_kontrol',
-                'sep.kd_dpjp as dpjp_pemberisurat',
-                'sep.catatan',
-                'sep.dpjp_pelayanan',
                 'r.status_keluar',
-                'r.no_sjp as no_sep',
                 'ru.kd_instansi',
                 'pg.nama_pegawai',
                 'pg.kode_dpjp',
                 'su.kd_poli_dpjp',
                 'su.nama_sub_unit',
-                'sep.tgl_rujukan',
-                'sep.kd_faskes'
         )
         ->join('registrasi as r', 'rawat_jalan.no_reg', '=', 'r.no_reg')
         ->join('pasien as p', 'r.no_rm', '=', 'p.no_rm')
+        ->join('asal_pasien as ap', 'r.kd_asal_pasien', '=', 'ap.kd_asal_pasien')
         ->join('cara_bayar as cb', 'r.kd_cara_bayar', '=', 'cb.kd_cara_bayar')
         ->join('pegawai as pg', 'rawat_jalan.kd_dokter', 'pg.kd_pegawai')
         ->join('sub_unit as su', function ($join) {
@@ -105,7 +100,13 @@ class RawatjalanIndex extends Component
         ->first();
 
         $this->pasien = $data;
+        $this->handlePeserta($this->pasien['no_kartu']);
         $this->confirmationCreateSep = true;
+    }
+
+    private function handlePeserta($no_kartu)
+    {
+        dd($no_kartu);
     }
 
     public function render()
@@ -129,6 +130,7 @@ class RawatjalanIndex extends Component
         ->join('cara_bayar as cb', 'r.kd_cara_bayar','cb.kd_cara_bayar')
         ->filter($this->tanggal)
         ->pencarian($this->search)
+        ->orderBy('rawat_jalan.no_reg', 'asc')
         ->paginate($this->limit);
 
         return view('livewire.pendaftaran.rawatjalan.rawatjalan-index', compact('dataRawatJalan', 'dataProsedur', 'dataAssesmentPelayanan', 'dataPenunjang'));

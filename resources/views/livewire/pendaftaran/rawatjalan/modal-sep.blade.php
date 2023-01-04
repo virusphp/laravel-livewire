@@ -72,10 +72,18 @@
 				</div>
 
 				<div class="relative z-0 mb-1 w-full group">
-					<x-jet-label for="kd_asal_pasien" value="{{ __('Asal Pasien') }}" />
+					<x-jet-label for="asal_pasien" value="{{ __('Asal Pasien') }}" />
 					<x-jet-input id="alamat" type="text" class="mt-0 text-xs block w-full"
-						wire:model.defer="pasien.kd_asal_pasien" />
+						wire:model.defer="pasien.asal_pasien" />
 					<x-jet-input-error for="pasien.kd_asal_pasien" class="mt-0" />
+				</div>
+
+				<div class="relative z-0 mb-1 w-full group">
+					<x-jet-label for="nama_asal_faskes" value="{{ __('Faskes Pasien') }}" />
+					<x-jet-input id="alamat" type="text" class="mt-0 text-xs block w-full"
+						wire:model.defer="pasien.nama_asal_faskes" />
+					<input type="hidden" name="kode_asal_faskes" wire:model.defer="pasien.kode_asal_faskes">
+					<x-jet-input-error for="pasien.faskes_asal_pasien" class="mt-0" />
 				</div>
 
 			</div>
@@ -92,7 +100,8 @@
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="no_rm" value="{{ __('No Rekemedik') }}" />
+						<x-jet-input type="checkbox" class="mr-2 leading-tight" wire:model.defer="pasien.cob" />Cob | No
+						Rekamedik
 						<x-jet-input id="no-rm" type="text" class="mt-0 text-xs block w-full"
 							wire:model.defer="pasien.no_rm" />
 						<x-jet-input-error for="pasien.no_rm" class="mt-0" />
@@ -114,36 +123,40 @@
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="asal_rujukan" value="{{ __('Asal Rujukan') }}" />
-						<select id="asal-rujukan" name="asal_rujukan" wire.model.defer="pasien.asal_rujukan"
+						<x-jet-label for="asal_faskes" value="{{ __('Asal Rujukan') }}" />
+						<select id="asal-faskes" name="asal_faskes" wire.model.defer="pasien.asal_fakses"
 							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 							required>
+							<option value="">- Pilih Asal Faskes -</option>
 							<option value="1">Faskes Tingkat 1</option>
 							<option value="2">Faskes Tingkat 2</option>
 						</select>
-						<x-jet-input-error for="pasien.asal_rujukan" class="mt-0" />
+						<x-jet-input-error for="pasien.asal_faskes" class="mt-0" />
 					</div>
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="ppk_rujukan" value="{{ __('PPK Rujukan / Perujuk') }}" />
-						<x-jet-input id="ppk-rujukan" type="text" class="mt-0 text-xs block w-full"
-							wire:model.defer="pasien.ppk_rujukan" />
-						<x-jet-input-error for="pasien.ppk_rujukan" class="mt-0" />
+						<x-jet-label for="nama_ppk_rujukan" value="{{ __('PPK Rujukan / Perujuk') }}" />
+						<x-jet-input id="nama-ppk-rujukan" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.nama_ppk_rujukan" />
+						<input type="hidden" name="kode_ppk_rujukan" wire:model.defer="pasien.kode_ppk_rujukan">
+						<x-jet-input-error for="pasien.kode_ppk_rujukan" class="mt-0" />
 					</div>
 				</div>
 
 				<div class="grid md:grid-cols-3 md:gap-6">
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="diagnosa" value="{{ __('Diagnosa') }}" />
-						<x-jet-input id="diagnosa" type="text" class="mt-0 text-xs block w-full"
-							wire:model.defer="pasien.diagnosa" />
+						<x-jet-label for="nama_diagnosa" value="{{ __('Diagnosa') }}" />
+						<x-jet-input id="nama-diagnosa" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.nama_diagnosa" />
+						<input type="hidden" name="kode_diagnosa" wire:model.defer="pasien.kode_diagnosa">
 						<x-jet-input-error for="pasien.diagnosa" class="mt-0" />
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="tujuan_poli" value="{{ __('Tujuan Poli') }}" />
-						<x-jet-input id="tujuan-poli" type="text" class="mt-0 text-xs block w-full"
-							wire:model.defer="pasien.tujuan_poli" />
-						<x-jet-input-error for="pasien.tujuan_poli" class="mt-0" />
+						<x-jet-label for="nama_poli" value="{{ __('Tujuan Poli') }}" />
+						<x-jet-input id="nama-poli" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.nama_poli" />
+						<input type="hidden" name="kode_poli" wire:model.defer="pasien.kode_poli">
+						<x-jet-input-error for="pasien.kode_poli" class="mt-0" />
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
