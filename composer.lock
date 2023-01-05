@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38df77e53f4c78f3a21a8ec11d0d0a7a",
+    "content-hash": "775173467a6eb1cc7badb9fbbe856473",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2515,6 +2515,53 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.2"
             },
             "time": "2022-11-12T15:38:23+00:00"
+        },
+        {
+            "name": "nullpunkt/lz-string-php",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nullpunkt/lz-string-php.git",
+                "reference": "bf4ae48f8a164bc6e95f5e7a2c6da45907ac3ba9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nullpunkt/lz-string-php/zipball/bf4ae48f8a164bc6e95f5e7a2c6da45907ac3ba9",
+                "reference": "bf4ae48f8a164bc6e95f5e7a2c6da45907ac3ba9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "monolog/monolog": "^1.17",
+                "phpunit/phpunit": "~9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LZCompressor\\": "src/LZCompressor"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Tobias Seipke",
+                    "email": "tobias.seipke@gmail.com",
+                    "homepage": "https://github.com/nullpunkt"
+                },
+                {
+                    "name": "Juhász Ádám",
+                    "email": "juhasz.adam@virgo.hu",
+                    "homepage": "https://github.com/JuhaszAdam"
+                }
+            ],
+            "description": "PHP Class implementation of LZ-String javascript.",
+            "support": {
+                "issues": "https://github.com/nullpunkt/lz-string-php/issues",
+                "source": "https://github.com/nullpunkt/lz-string-php/tree/1.3.0"
+            },
+            "time": "2021-06-17T07:52:00+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -5752,6 +5799,56 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.5"
             },
             "time": "2022-09-12T13:28:28+00:00"
+        },
+        {
+            "name": "virusphp/bridging-bpjs",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/virusphp/bridging-bpjs.git",
+                "reference": "9b7f870027c4bfa72d00d411aac4b2dca65296b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/virusphp/bridging-bpjs/zipball/9b7f870027c4bfa72d00d411aac4b2dca65296b4",
+                "reference": "9b7f870027c4bfa72d00d411aac4b2dca65296b4",
+                "shasum": ""
+            },
+            "require": {
+                "nullpunkt/lz-string-php": "^1.3",
+                "php": "^7.3|^8.0",
+                "vlucas/phpdotenv": "^5.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bpjs\\Bridging\\BridgingBpjsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bpjs\\Bridging\\": "src/Bpjs/",
+                    "Kemkes\\Bridging\\": "src/kemkes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "virusphp",
+                    "email": "packercyber@gmail.com"
+                }
+            ],
+            "description": "Service Briding Bpjs",
+            "support": {
+                "issues": "https://github.com/virusphp/bridging-bpjs/issues",
+                "source": "https://github.com/virusphp/bridging-bpjs/tree/v2.1.1"
+            },
+            "time": "2022-11-26T06:04:50+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
