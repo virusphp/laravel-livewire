@@ -53,6 +53,7 @@
 						<x-jet-label for="kelas_rawat" value="{{ __('Hak Kelas') }}" />
 						<x-jet-input id="kelas-rawat" type="text" class="mt-0 text-xs block w-full"
 							wire:model.defer="pasien.kelas_rawat" />
+						<input type="hidden" name="hak_kelas" wire:model.defer="pasien.hak_kelas">
 						<x-jet-input-error for="pasien.kelas_rawat" class="mt-0" />
 					</div>
 
@@ -83,7 +84,7 @@
 					<x-jet-input id="alamat" type="text" class="mt-0 text-xs block w-full"
 						wire:model.defer="pasien.nama_asal_faskes" />
 					<input type="hidden" name="kode_asal_faskes" wire:model.defer="pasien.kode_asal_faskes">
-					<x-jet-input-error for="pasien.faskes_asal_pasien" class="mt-0" />
+					<x-jet-input-error for="pasien.kode_asal_faskes" class="mt-0" />
 				</div>
 
 			</div>
@@ -116,7 +117,25 @@
 
 				<div class="grid md:grid-cols-3 md:gap-6">
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="no_rujukan" value="{{ __('No Rujukan') }}" />
+						<div class="flex justify-start">
+							<x-jet-label for="no_rujukan" value="{{ __('No Rujukan') }}" />
+							<x-jet-secondary-button class="text-xs w-14 h-3 px-1 items-center"
+								wire:click="showListPcare()" wire:loading.attr="disabled">
+								{{__('PCARE')}}
+							</x-jet-secondary-button>
+							<x-jet-secondary-button class="text-xs w-7 h-3 px-1 items-center"
+								wire:click="$set('confirmationCreateSep', false)" wire:loading.attr="disabled">
+								{{__('RS')}}
+							</x-jet-secondary-button>
+							<x-jet-secondary-button class="text-xs w-7 h-3 px-1 items-center"
+								wire:click="$set('confirmationCreateSep', false)" wire:loading.attr="disabled">
+								{{__('RK')}}
+							</x-jet-secondary-button>
+							<x-jet-secondary-button class="text-xs w-7 h-3 px-1 items-center"
+								wire:click="$set('confirmationCreateSep', false)" wire:loading.attr="disabled">
+								{{__('SK')}}
+							</x-jet-secondary-button>
+						</div>
 						<x-jet-input id="no-rujukan" type="text" class="mt-0 text-xs block w-full"
 							wire:model.defer="pasien.no_rujukan" />
 						<x-jet-input-error for="pasien.no_rujukan" class="mt-0" />

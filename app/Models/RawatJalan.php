@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,8 +19,12 @@ class RawatJalan extends Model
     protected $keyType = "string";
 
     protected $fillable = [
-        'no_reg'
+        'no_reg','tgl_reg'
     ];
+
+    // protected $casts = [
+    //     'tgl_reg' => 'datetime:Y-m-d'
+    // ];
 
     public function pasien()
     {

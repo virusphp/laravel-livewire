@@ -6,6 +6,9 @@ use App\Models\AssesmentPelayanan;
 use App\Models\FlagProsedur;
 use App\Models\Penunjang;
 use App\Models\RawatJalan;
+use App\Services\Bpjs\Vclaim\Peserta;
+use App\Services\Bpjs\Vclaim\Rujukan;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -48,7 +51,12 @@ class RawatjalanIndex extends Component
         'pasien.alamat' => 'required',
         'pasien.cara_bayar' => 'required',
         'pasien.kd_asal_pasien' => 'required',
+        'pasien.hak_kelas' => 'required',
+        'pasien.kelas_rawat' => 'required',
+        'pasien.status_peserta' => 'required',
         'pasien.asal_pasien' => 'required',
+        'pasien.nama_asal_faskes' => 'required',
+        'pasien.kode_asal_faskes' => 'required',
         'pasien.no_kartu' => 'required',
         'pasien.no_rm' => 'required',
         'pasien.tanggal_sep' => 'required',
@@ -73,6 +81,7 @@ class RawatjalanIndex extends Component
                 'r.kd_asal_pasien',
                 'pp.no_kartu',
                 'r.no_rm',
+                // DB::raw('FORMAT(r.tgl_reg, yyyy-mm-dd) as tanggal_reg'),
                 'r.tgl_reg as tanggal_sep',
                 'p.no_telp',
                 'r.status_keluar',
@@ -99,14 +108,38 @@ class RawatjalanIndex extends Component
         ->where('r.no_reg', '=', $noRegistrasi)
         ->first();
 
+        $tanggal_sep = tanggalFormat($data->tanggal_sep);
+        $tanggal_lahir = tanggalFormat($data->tanggal_lahir);
         $this->pasien = $data;
-        $this->handlePeserta($this->pasien['no_kartu']);
+        $this->pasien['tanggal_sep'] = $tanggal_sep;
+        $this->pasien['tanggal_lahir'] = $tanggal_lahir;
+
+        $this->handlePeserta($this->pasien['no_kartu'], $tanggal_sep);
         $this->confirmationCreateSep = true;
     }
 
-    private function handlePeserta($no_kartu)
+    private function handlePeserta($no_kartu, $tanggal_sep)
     {
-        dd($no_kartu);
+        $bridge = new Peserta;
+        $peserta = json_decode($bridge->getPesertaByKartu($no_kartu, $tanggal_sep));
+        $peserta = $peserta->response->peserta;
+        // dd($peserta, $this->pasien->nama_pasien);
+        $this->pasien->status_peserta = $peserta->jenisPeserta->keterangan;
+
+        $this->pasien->hak_kelas = $peserta->hakKelas->kode;
+        $this->pasien->kelas_rawat = $peserta->hakKelas->keterangan;
+
+        $this->pasien->kode_asal_faskes = $peserta->provUmum->kdProvider;
+        $this->pasien->nama_asal_faskes = $peserta->provUmum->nmProvider;
+
+        $this->pasien->tanggal_sep = $tanggal_sep;
+    }
+
+    public function showListPcare()
+    {
+        $bridge = new Rujukan;
+        $peserta = json_decode($bridge->getListRujukanPcare($this->pasien->no_kartu));
+        dd($peserta);
     }
 
     public function render()
