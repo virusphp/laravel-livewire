@@ -37,5 +37,10 @@ function statusFaktur($nilai)
 
 function statusRm($nilai)
 {
-    return '<button wire:click="showDetail('.$nilai.')" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-yellow-400 dark:bg-yellow-200 dark:text-yellow-900">'.$nilai.'</button>';
+    return '<button wire:click="showDetailRm('.$nilai.')" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-yellow-400 dark:bg-yellow-200 dark:text-yellow-900">'.$nilai.'</button>';
+}
+
+function statusRujukanPcare($nilai)
+{
+    return "<button wire:click.prevent=showDetailRujukanPcare('{$nilai}') class='bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-yellow-400 dark:bg-yellow-200 dark:text-yellow-900'>".$nilai."</button>";
 }

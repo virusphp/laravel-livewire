@@ -138,6 +138,7 @@
                         {{ $dataRawatJalan->appends(['search' => 'search'])->render() }}
                     </div>
                     @include('livewire.pendaftaran.rawatjalan.modal-sep')
+                    @include('livewire.pendaftaran.rawatjalan.modal-rujukan')
 
                 </div>
             </div>

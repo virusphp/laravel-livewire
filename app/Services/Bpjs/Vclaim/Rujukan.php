@@ -19,4 +19,12 @@ class Rujukan
         $peserta =  $this->bridge->getRequest($endpoint);
 		return $peserta;
 	}
+
+    public function getListRujukanRs($noKartu)
+    {
+		$endpoint = "Rujukan/RS/List/Peserta/{$noKartu}";
+        $peserta =  $this->bridge->getRequest($endpoint);
+		return $peserta;
+	}
+
 }

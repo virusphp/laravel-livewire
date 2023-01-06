@@ -30,9 +30,14 @@ class RawatjalanIndex extends Component
     public $pasien;
     public $penjamin;
 
-    protected $listeners = ["setTanggal" => 'setDate'];
+    public $listRujukan;
+    public $asalFaskes;
+    public $noRujukan;
+
+    // protected $listeners = ["showDetailRujukanPcare"];
 
     public $confirmationCreateSep = false;
+    public $showListRujukan = false;
 
      protected $queryString = [
         'tanggal' => ['except' => false],
@@ -138,8 +143,52 @@ class RawatjalanIndex extends Component
     public function showListPcare()
     {
         $bridge = new Rujukan;
-        $peserta = json_decode($bridge->getListRujukanPcare($this->pasien->no_kartu));
-        dd($peserta);
+        $rujukan = json_decode($bridge->getListRujukanPcare($this->pasien->no_kartu));
+        if ($rujukan->metaData->code == 200) {
+            $rujukan = $rujukan->response;
+            $this->listRujukan = $rujukan->rujukan;
+            $this->asalFaskes = 1;
+            $this->showListRujukan = true;
+        } else {
+            $rujukan = $rujukan->response;
+            $this->listRujukan = [];
+            $this->asalFaskes = 2;
+            $this->showListRujukan = true;
+        }
+    }
+
+    public function showListRs()
+    {
+        $bridge = new Rujukan;
+        $rujukan = json_decode($bridge->getListRujukanRs($this->pasien->no_kartu));
+        if ($rujukan->metaData->code == 200) {
+            $rujukan = $rujukan->response;
+            $this->listRujukan = $rujukan->rujukan;
+            $this->asalFaskes = 2;
+            $this->showListRujukan = true;
+        } else {
+            $rujukan = $rujukan->response;
+            $this->listRujukan = [];
+            $this->asalFaskes = 2;
+            $this->showListRujukan = true;
+        }
+    }
+
+    public function showDetailRujukanPcare($noRujukan)
+    {
+        dd("MASUK SINI GAES", $noRujukan);
+    }
+
+    public function updatedShowListRujukan()
+    {
+        if ($this->showListRujukan == false) {
+            $this->listRujukan = null;
+        }
+    }
+
+    public function showDetailRm($noRm)
+    {
+        dd($noRm);
     }
 
     public function render()

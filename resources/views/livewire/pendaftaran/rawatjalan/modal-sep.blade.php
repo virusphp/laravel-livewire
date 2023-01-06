@@ -123,16 +123,16 @@
 								wire:click="showListPcare()" wire:loading.attr="disabled">
 								{{__('PCARE')}}
 							</x-jet-secondary-button>
-							<x-jet-secondary-button class="text-xs w-7 h-3 px-1 items-center"
-								wire:click="$set('confirmationCreateSep', false)" wire:loading.attr="disabled">
+							<x-jet-secondary-button class="text-xs w-7 h-3 px-1 items-center" wire:click="showListRs()"
+								wire:loading.attr="disabled">
 								{{__('RS')}}
 							</x-jet-secondary-button>
 							<x-jet-secondary-button class="text-xs w-7 h-3 px-1 items-center"
-								wire:click="$set('confirmationCreateSep', false)" wire:loading.attr="disabled">
+								wire:click="$set('showListPcare', false)" wire:loading.attr="disabled">
 								{{__('RK')}}
 							</x-jet-secondary-button>
 							<x-jet-secondary-button class="text-xs w-7 h-3 px-1 items-center"
-								wire:click="$set('confirmationCreateSep', false)" wire:loading.attr="disabled">
+								wire:click="$set('showListPcare', false)" wire:loading.attr="disabled">
 								{{__('SK')}}
 							</x-jet-secondary-button>
 						</div>
