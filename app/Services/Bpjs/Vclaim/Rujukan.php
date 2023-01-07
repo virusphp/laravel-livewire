@@ -16,15 +16,28 @@ class Rujukan
     public function getListRujukanPcare($noKartu)
     {
 		$endpoint = "Rujukan/List/Peserta/{$noKartu}";
-        $peserta =  $this->bridge->getRequest($endpoint);
-		return $peserta;
+        $rujukan =  $this->bridge->getRequest($endpoint);
+		return $rujukan;
 	}
 
     public function getListRujukanRs($noKartu)
     {
 		$endpoint = "Rujukan/RS/List/Peserta/{$noKartu}";
-        $peserta =  $this->bridge->getRequest($endpoint);
-		return $peserta;
+        $rujukan =  $this->bridge->getRequest($endpoint);
+		return $rujukan;
 	}
 
+    public function getRujukanByNomor($noRujukan)
+    {
+		$endpoint = "Rujukan/{$noRujukan}";
+        $rujukan =  $this->bridge->getRequest($endpoint);
+		return $rujukan;
+    }
+
+    public function getRujukanRsByNomor($noRujukan)
+    {
+		$endpoint = "Rujukan/RS/{$noRujukan}";
+        $rujukan =  $this->bridge->getRequest($endpoint);
+		return $rujukan;
+    }
 }

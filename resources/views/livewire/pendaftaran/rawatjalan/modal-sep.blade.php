@@ -138,15 +138,16 @@
 						</div>
 						<x-jet-input id="no-rujukan" type="text" class="mt-0 text-xs block w-full"
 							wire:model.defer="pasien.no_rujukan" />
+						<input type="hidden" name="tanggal_rujukan" wire:model.defer="pasien.tanggal_rujukan">
 						<x-jet-input-error for="pasien.no_rujukan" class="mt-0" />
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
 						<x-jet-label for="asal_faskes" value="{{ __('Asal Rujukan') }}" />
-						<select id="asal-faskes" name="asal_faskes" wire.model.defer="pasien.asal_fakses"
+						<select id="asal-faskes" name="asalFaskes" wire.model.defer="asalFaskes"
 							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 							required>
-							<option value="">- Pilih Asal Faskes -</option>
+							<option value="" selected>- Pilih Asal Faskes -</option>
 							<option value="1">Faskes Tingkat 1</option>
 							<option value="2">Faskes Tingkat 2</option>
 						</select>

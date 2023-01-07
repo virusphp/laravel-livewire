@@ -31,8 +31,10 @@ class RawatjalanIndex extends Component
     public $penjamin;
 
     public $listRujukan;
+    public $rujukan;
     public $asalFaskes;
     public $noRujukan;
+
 
     // protected $listeners = ["showDetailRujukanPcare"];
 
@@ -66,11 +68,18 @@ class RawatjalanIndex extends Component
         'pasien.no_rm' => 'required',
         'pasien.tanggal_sep' => 'required',
         'pasien.no_rujukan' => 'required',
-        'pasien.tujuan_poli' => 'required',
+        'pasien.tanggal_rujukan' => 'required',
+
+        'pasien.kode_diagnosa' => 'required',
+        'pasien.nama_diagnosa' => 'required',
+        'pasien.kode_poli' => 'required',
         'pasien.nama_poli' => 'required',
-        'pasien.kd_faskes' => 'required',
+        'pasien.no_telp' => 'required',
+
+        'pasien.kode_faskes' => 'required',
         'pasien.nama_faskes' => 'required',
-        'pasien.asal_faskes' => 'required',
+        'pasien.nama_ppk_rujukan' => 'required',
+        'pasien.kode_ppk_rujukan' => 'required',
     ];
 
     public function confirmCreateSep($noRegistrasi)
@@ -176,7 +185,32 @@ class RawatjalanIndex extends Component
 
     public function showDetailRujukanPcare($noRujukan)
     {
-        dd("MASUK SINI GAES", $noRujukan);
+        $bridge = new Rujukan;
+        if ($this->asalFaskes == 1) {
+            $rujukan = json_decode($bridge->getRujukanByNomor($noRujukan));
+            $namaFaskes = "Faskes Tingka 1";
+        } else {
+            $rujukan = json_decode($bridge->getRujukanRsByNomor($noRujukan));
+            $namaFaskes = "Faskes Tingka 2";
+        }
+        // dd($rujukan);
+        $this->listRujukan = null;
+        $rujukan = $rujukan->response->rujukan;
+        $this->pasien['no_rujukan'] = $noRujukan;
+        $this->pasien['tanggal_rujukan'] = $rujukan->tglKunjungan;
+
+        // dd($this->asalFaskes);
+        // $this->pasien['nama_faskes'] = $namaFaskes;
+
+        $this->pasien['kode_ppk_rujukan'] = $rujukan->provPerujuk->kode;
+        $this->pasien['nama_ppk_rujukan'] = $rujukan->provPerujuk->nama;
+
+        $this->pasien['kode_diagnosa'] = $rujukan->diagnosa->kode;
+        $this->pasien['nama_diagnosa'] = $rujukan->diagnosa->nama;
+        $this->pasien['kode_poli'] = $rujukan->poliRujukan->kode;
+        $this->pasien['nama_poli'] = $rujukan->poliRujukan->nama;
+        $this->pasien['no_telp'] = $rujukan->peserta->mr->noTelepon ?? "0822288888";
+        $this->showListRujukan = false;
     }
 
     public function updatedShowListRujukan()
