@@ -143,15 +143,11 @@
 					</div>
 
 					<div class="relative z-0 mb-1 w-full group">
-						<x-jet-label for="asal_faskes" value="{{ __('Asal Rujukan') }}" />
-						<select id="asal-faskes" name="asalFaskes" wire.model.defer="asalFaskes"
-							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							required>
-							<option value="" selected>- Pilih Asal Faskes -</option>
-							<option value="1">Faskes Tingkat 1</option>
-							<option value="2">Faskes Tingkat 2</option>
-						</select>
-						<x-jet-input-error for="pasien.asal_faskes" class="mt-0" />
+						<x-jet-label for="nama_faskes" value="{{ __('Asal Rujukan') }}" />
+						<x-jet-input id="nama-faskes" type="text" class="mt-0 text-xs block w-full"
+							wire:model.defer="pasien.nama_faskes" />
+						<input type="hidden" name="kode-faskes" wire:model.defer="pasien.kode_faskes">
+						<x-jet-input-error for="pasien.kode_faskes" class="mt-0" />
 					</div>
 					<div class="relative z-0 mb-1 w-full group">
 						<x-jet-label for="nama_ppk_rujukan" value="{{ __('PPK Rujukan / Perujuk') }}" />
@@ -189,24 +185,24 @@
 
 				<div class="relative z-0 mb-1 w-60 group">
 					<x-jet-label for="tujuan_kunjungan" value="{{ __('Tujuan Kunjungan') }}" />
-					<select wire:model.defer="pasien.tujuan_kunjungan" id="tujuan-kunjungan" name="tujuan_kunjungan"
+					<select wire:model="tujuanKunjung" id="tujuan-kunjungan" name="tujuan_kunjungan"
 						class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-						<option value="">- Pilih tujuan kunjungan -</option>
-						<option value="0">Normal (Kunjungan Pertama)</option>
-						<option value="1">Prosedur</option>
-						<option value="2">Konsul Dokter</option>
+						<option value="" selected>- Pilih tujuan kunjungan -</option>
+						@foreach($this->dataTujuanKunjung as $key => $value)
+						<option value="{{$key}}"> {{ $value }}</option>
+						@endforeach
 					</select>
 					<x-jet-input-error for="pasien.tujuan_kunjungan" class="mt-0" />
 				</div>
 
-				<div class="relative z-0 mb-1 w-60 group {{ $assesmentPelayanan == true ? '' : 'hidden' }}">
+				<div class="relative z-0 mb-1 w-60 group {{ $assesment == true ? '' : 'hidden' }}">
 					<x-jet-label for="assesment_pelayanan" value="{{ __('Assesment Pelayanan') }}" />
 					<select wire:model.defer="pasien.assesment_pelayanan" id="assesment-pelayanan"
 						name="assesment_pelayanan"
 						class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 						<option value="">- Pilih Assesment -</option>
-						@foreach($dataAssesmentPelayanan as $val)
-						<option value="{{ $val->kode }}" wire:key="{{ $val->kode }}">{{ $val->nama }}
+						@foreach($this->assesmentPelayanan as $val)
+						<option value="{{ $val['kode'] }}" wire:key="{{ $val['kode'] }}">{{ $val['nama'] }}
 						</option>
 						@endforeach
 					</select>
