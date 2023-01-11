@@ -26,13 +26,16 @@ class RawatjalanIndex extends Component
     public $lakaLantas = false;
 
     // SELECTED 
-    public $tujuanKunjung = null;
+    public $selectedTujuanKunjung = null;
+    public $selectedProsedur = null;
+
+    // HIDE AND SHOWW SELECTED CHANGE
     public $assesment = true;
     public $prosedure = false;
 
     public $pasien;
-    public $penjamin;
 
+    // RUJUKAN
     public $listRujukan;
     public $rujukan;
     public $asalFaskes = null;
@@ -40,9 +43,7 @@ class RawatjalanIndex extends Component
 
     public $kodeAsalFaskes;
 
-    
-    // protected $listeners = ["showDetailRujukanPcare"];
-
+    // MODAL
     public $confirmationCreateSep = false;
     public $showListRujukan = false;
 
@@ -86,6 +87,16 @@ class RawatjalanIndex extends Component
 
         'pasien.nama_ppk_rujukan' => 'required',
         'pasien.kode_ppk_rujukan' => 'required',
+
+        'pasien.tujuan_kunjung' => 'required',
+        'pasien.assesment_pelayanan' => 'nullable|string',
+
+        'pasien.prosedur' => 'nullable|string',
+        'pasien.kode_penunjang' => 'nullable|string',
+
+        'pasien.dpjp_pemberisurat' => 'nullable|string',
+        'pasien.dpjp_layanan' => 'nullable|string',
+        'pasien.catatan' => 'nullable|string',
     ];
 
     public function getDataTujuanKunjungProperty()
@@ -104,7 +115,13 @@ class RawatjalanIndex extends Component
         return $assesmentPelayanan;
     }
 
-    public function updatedTujuanKunjung($tujuanKunjung)
+    public function getDataProsedurProperty()
+    {
+        $dataProsedur = FlagProsedur::select('kode_flag_prosedur as kode', 'nama_flag_prosedur as nama')->get();    
+        return $dataProsedur;
+    }
+
+    public function updatedSelectedTujuanKunjung($tujuanKunjung)
     {
         if($tujuanKunjung == 0) {
             $this->assesment = true;
@@ -119,6 +136,24 @@ class RawatjalanIndex extends Component
             $this->prosedure = false;
             $this->dpjp = true;
         }
+    }
+
+    public function getDataPenunjangProperty()
+    {
+        return [];
+    }
+
+    public function updatedSelectedProsedur($prosedur)
+    {
+        if (!is_null($prosedur)) {
+            $dataPenunjang = Penunjang::select('kode_penunjang as kode', 'nama_penunjang as nama')->where('status_penunjang', $prosedur)->get();
+            $this->dataPenunjang = $dataPenunjang;
+        } 
+    }
+
+    public function resetData()
+    {
+        $this->reset(['pasien','selectedTujuanKunjung','selectedProsedur']);
     }
 
     public function confirmCreateSep($noRegistrasi)
@@ -265,10 +300,6 @@ class RawatjalanIndex extends Component
     public function render()
     {
         // dd($this->tanggal);
-        $dataProsedur = FlagProsedur::select('kode_flag_prosedur as kode', 'nama_flag_prosedur as nama')->get();
-        // $dataAssesmentPelayanan = AssesmentPelayanan::select('kode_assesment_pelayanan as kode', 'nama_assesment_pelayanan as nama')->get();
-        // dd($dataAssesmentPelayanan);
-        $dataPenunjang = Penunjang::select('kode_penunjang as kode', 'nama_penunjang as nama')->get();
         $dataRawatJalan = RawatJalan::select(
             'rawat_jalan.no_reg',
             'rawat_jalan.no_rm',
@@ -287,7 +318,7 @@ class RawatjalanIndex extends Component
         ->orderBy('rawat_jalan.no_reg', 'asc')
         ->paginate($this->limit);
 
-        return view('livewire.pendaftaran.rawatjalan.rawatjalan-index', compact('dataRawatJalan', 'dataProsedur','dataPenunjang'));
+        return view('livewire.pendaftaran.rawatjalan.rawatjalan-index', compact('dataRawatJalan'));
     }
 
 }

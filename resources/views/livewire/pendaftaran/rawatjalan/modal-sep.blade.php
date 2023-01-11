@@ -185,13 +185,14 @@
 
 				<div class="relative z-0 mb-1 w-60 group">
 					<x-jet-label for="tujuan_kunjungan" value="{{ __('Tujuan Kunjungan') }}" />
-					<select wire:model="tujuanKunjung" id="tujuan-kunjungan" name="tujuan_kunjungan"
+					<select wire:model="selectedTujuanKunjung" id="tujuan-kunjungan" name="tujuan_kunjungan"
 						class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 						<option value="" selected>- Pilih tujuan kunjungan -</option>
 						@foreach($this->dataTujuanKunjung as $key => $value)
 						<option value="{{$key}}"> {{ $value }}</option>
 						@endforeach
 					</select>
+					<input type="hidden" name="tujuan_kunjung" wire:model.defer="pasien.tujuan_kunjung">
 					<x-jet-input-error for="pasien.tujuan_kunjungan" class="mt-0" />
 				</div>
 
@@ -212,14 +213,15 @@
 				<div class="grid md:grid-cols-3 md:gap-6 {{ $prosedure == true ? '' : 'hidden' }}">
 					<div class="relative z-0 mb-1 w-full group">
 						<x-jet-label for="prosedur" value="{{ __('Prosedur') }}" />
-						<select wire:model.defer="pasien.prosedur" id="prosedur"
+						<select wire:model="selectedProsedur" id="prosedur"
 							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-							<option value="">- Pilih prosedur -</option>
-							@foreach($dataProsedur as $val)
+							<option value="" selected>- Pilih prosedur -</option>
+							@foreach($this->dataProsedur as $val)
 							<option value="{{ $val->kode }}" wire:key="{{ $val->kode }}">{{ $val->nama }}
 							</option>
 							@endforeach
 						</select>
+						<input type="hidden" name="prosedur" wire:model.defer="pasien.prosedur">
 						<x-jet-input-error for="pasien.prosedur" class="mt-0" />
 					</div>
 
@@ -228,10 +230,12 @@
 						<select wire:model.defer="pasien.kode_penunjang" id="prosedur"
 							class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 							<option value="">- Pilih penunjang -</option>
+							@if(isset($selectedProsedur))
 							@foreach($dataPenunjang as $val)
 							<option value="{{ $val->kode }}" wire:key="{{ $val->kode }}">{{ $val->nama }}
 							</option>
 							@endforeach
+							@endif
 						</select>
 						<x-jet-input-error for="pasien.penunjang" class="mt-0" />
 					</div>
@@ -249,6 +253,7 @@
 						<x-jet-label for="dpjp_pemberisurat" value="{{ __('DPJP Pemberi surat / SKDP') }}" />
 						<x-jet-input id="dpjp_pemberisurat" type="text" class="mt-0 text-xs block w-full"
 							wire:model.defer="pasien.dpjp_pemberisurat" />
+						<input type="hidden" name="dpjp_layanan" wire:model.defer="pasien.dpjp_layanan">
 						<x-jet-input-error for="pasien.dpjp_pemberisurat" class="mt-0" />
 					</div>
 				</div>
