@@ -5,6 +5,7 @@ use App\Http\Livewire\Laporan\FakturTerimaIndex;
 use App\Http\Livewire\Laporan\TandaTerimaIndex;
 use App\Http\Livewire\Master\Bagian\BagianIndex;
 use App\Http\Livewire\Master\Subunit\SubunitIndex;
+use App\Http\Livewire\Pasien\PasienIndex;
 use App\Http\Livewire\Pendaftaran\Rawatjalan\RawatjalanIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,10 @@ Route::middleware([
         Route::group(['namespace' => 'Rawatjalan'], function () {
             Route::get('rawatjalan', RawatjalanIndex::class)->name('rawatjalan');
         });
+    });
+
+    Route::group(['namespace' => 'Pasien'], function () {
+        Route::get('pasien', PasienIndex::class)->name('pasien');
     });
 
 });

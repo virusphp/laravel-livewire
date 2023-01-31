@@ -15,9 +15,17 @@ class Pasien extends Model
 
     protected $primaryKey = "no_rm";
 
+    protected $keyType = "string";
 
     public function rawatjalan()
     {
         return $this->belongsTo(RawatJalan::class, "no_rm", "no_rm");
+    }
+
+    public function scopePencarian($query, $search)
+    {
+        return $query->when($search, function($q, $search) {
+            $q->where('nama_pasien', 'like', "%{$search}%");
+        });
     }
 }
