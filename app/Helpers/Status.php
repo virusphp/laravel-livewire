@@ -35,12 +35,17 @@ function statusFaktur($nilai)
     return $nilai == 2 ? "Sudah" : "Belum";
 }
 
+function jenisKelamin($nilai)
+{
+    return $nilai == 1 ? "Laki laki" : "Perempuan";
+}
+
 function statusRm($nilai)
 {
-    return '<button wire:click="showDetailRm('.$nilai.')" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-yellow-400 dark:bg-yellow-200 dark:text-yellow-900">'.$nilai.'</button>';
+    return '<button wire:click="showDetailRm('.$nilai.')" class="border border-blue-600 bg-gray-100 text-blue-600 text-sm font-medium mr-2 px-1.5 py-0.5 rounded hover:bg-blue-600 hover:text-white" >'.$nilai.'</button>';
 }
 
 function statusRujukanPcare($nilai)
 {
-    return "<button wire:click.prevent=showDetailRujukanPcare('{$nilai}') class='bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-yellow-400 dark:bg-yellow-200 dark:text-yellow-900'>".$nilai."</button>";
+    return "<button wire:click.prevent=showDetailRujukanPcare('{$nilai}') class='bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-yellow-400'>".$nilai."</button>";
 }
