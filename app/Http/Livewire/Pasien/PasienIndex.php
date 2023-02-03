@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Pasien;
 
+use App\Models\Kabupaten;
 use App\Models\Pasien;
+use App\Models\Propinsi;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +15,9 @@ class PasienIndex extends Component
     public $search;
     public $tanggal;
     public $limit = 20;
+
+    public $selectedKabupaten = null;
+    public $selectedKelamin = null;
 
     public $pasien;
 
@@ -32,9 +37,25 @@ class PasienIndex extends Component
         $this->resetPage();
     }
 
+    public function getKelaminProperty()
+    {
+        $dataJenisKelamin = [
+            '0' => 'Perempuan',
+            '1' => 'Laki-laki'
+        ];
+        return $dataJenisKelamin;
+    }
+
+    public function getKabupatenProperty()
+    {
+        return Pasien::join('kelurahan as kel', 'pasien.kd_kelurahan', 'kel.kd_kelurahan')
+                ->join('kecamatan as kec','kel.kd_kecamatan','kec.kd_kecamatan')
+                ->join('kabupaten as kab', 'kec.kd_kabupaten','kab.kd_kabupaten')
+                ->pluck('kab.nama_kabupaten as nama', 'kab.kd_kabupaten as id');
+    }
+
     public function detailPasien($noRm)
     {
-        // dd(trim($noRm));
         $data = Pasien::select(
             'pasien.no_rm',
             'pasien.tgl_rm as tanggal_rm',
@@ -56,7 +77,7 @@ class PasienIndex extends Component
             'pasien.status_kawin',
             'pasien.nik'
         )
-        ->pencarian($this->search)
+        ->pencarianLike($this->search)
         ->whereNotIn('pasien.no_rm',['000000','000001'])
         ->join('kelurahan as kel', 'pasien.kd_kelurahan', 'kel.kd_kelurahan')
         ->join('kecamatan as kec', 'kel.kd_kecamatan', 'kec.kd_kecamatan')
@@ -93,12 +114,14 @@ class PasienIndex extends Component
             'pasien.status_kawin',
             'pasien.nik'
         )
-        ->pencarian($this->search)
+        ->pencarianLike($this->search)
+        ->pencarianByKab($this->selectedKabupaten)
+        ->filterKelamin($this->selectedKelamin)
         ->whereNotIn('pasien.no_rm',['000000','000001'])
         ->join('kelurahan as kel', 'pasien.kd_kelurahan', 'kel.kd_kelurahan')
         ->join('kecamatan as kec', 'kel.kd_kecamatan', 'kec.kd_kecamatan')
         ->join('kabupaten as kab', 'kec.kd_kabupaten', 'kab.kd_kabupaten')
-        // ->join('propinsi as prop', 'kab.kd_propinsi', 'kab.kd_propinsi')
+        ->join('propinsi as prop', 'kab.kd_propinsi', 'prop.kd_propinsi')
         ->paginate($this->limit);
 
         return view('livewire.pasien.pasien-index', compact('dataPasien'));

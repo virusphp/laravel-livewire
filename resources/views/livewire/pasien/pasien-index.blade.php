@@ -44,13 +44,20 @@
                 </div>
 
                 <div class="mt-2 text-gray-500">
-                    <div class="flex justify-between py-2">
-                        <div>
+                    <div class="flex justify-start py-2">
+                        <div class="relative mr-2">
                             <input type="search" wire:model.debounce.300ms="search" placeholder="Search..."
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
-                        <div class="mr-2">
-                            <input type="checkbox" class="mr-2 leading-tight" wire:model="depo">Aktif sr-only
+                        <div class="relative mr-2">
+                            <x-select-search :data="$this->kabupaten" wire:model="selectedKabupaten"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Pilih Kabupaten!" />
+                        </div>
+                        <div class="relative mr-2">
+                            <x-select-search :data="$this->kelamin" wire:model="selectedKelamin"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Pilih Jenis kelamin!" />
                         </div>
                     </div>
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -60,9 +67,6 @@
                                 <tr>
                                     <th scope="col" class="py-1 px-1 font-bold">
                                         NO RM
-                                        {{-- <button wire:click="sortBy('notasp')">NOTA SP </buttcon>
-                                            <x-sort-icon sortField="notasp" :sort-by="$sortBy" :sort-asc="$sortAsc" />
-                                            --}}
                                     </th>
                                     <th scope="col" class="py-1 px-1">
                                         NAMA PASIEN

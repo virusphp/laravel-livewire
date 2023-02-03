@@ -22,10 +22,24 @@ class Pasien extends Model
         return $this->belongsTo(RawatJalan::class, "no_rm", "no_rm");
     }
 
-    public function scopePencarian($query, $search)
+    public function scopePencarianLike($query, $search)
     {
         return $query->when($search, function($q, $search) {
             $q->where('nama_pasien', 'like', "%{$search}%");
+        });
+    }
+
+    public function scopePencarianByKab($query, $kabupaten)
+    {
+        return $query->when($kabupaten, function($q, $kabupaten) {
+            $q->where('kab.kd_kabupaten', '=', $kabupaten);
+        });
+    }
+
+    public function scopeFilterKelamin($query, $kelamin)
+    {
+        return $query->when($kelamin, function($q, $kelamin) {
+            $q->where('jns_kel', '=', $kelamin);
         });
     }
 }
