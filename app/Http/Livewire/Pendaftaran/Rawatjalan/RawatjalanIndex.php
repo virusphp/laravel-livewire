@@ -6,6 +6,7 @@ use App\Models\AssesmentPelayanan;
 use App\Models\FlagProsedur;
 use App\Models\Penunjang;
 use App\Models\RawatJalan;
+use App\Models\Registrasi;
 use App\Services\Bpjs\Vclaim\Peserta;
 use App\Services\Bpjs\Vclaim\Rujukan;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,11 @@ class RawatjalanIndex extends Component
     public $assesment = true;
     public $prosedure = false;
 
+    // Model Object
     public $pasien;
+
+    // Model List
+    public $riwayatPasien;
 
     // RUJUKAN
     public $listRujukan;
@@ -46,6 +51,7 @@ class RawatjalanIndex extends Component
     // MODAL
     public $confirmationCreateSep = false;
     public $showListRujukan = false;
+    public $showModalRiwayatPasien = false;
 
      protected $queryString = [
         'tanggal' => ['except' => false],
@@ -292,9 +298,46 @@ class RawatjalanIndex extends Component
         }
     }
 
+    public function updatedShowModalRiwayatPasien()
+    {
+        if ($this->showModalRiwayatPasien == false) {
+            $this->riwayatPasien = null;
+        }
+    }
+
     public function showDetailRm($noRm)
     {
-        dd($noRm);
+        $now = now();
+        $tglMulai = date_format(date_sub(date_create($now), date_interval_create_from_date_string('30 days')), 'Y-m-d');
+        $riwayatPasien = Registrasi::select(
+            'registrasi.no_reg',
+            'registrasi.tgl_reg as tanggal_reg',
+            'registrasi.jns_rawat as jenis_rawat',
+            'cb.keterangan as cara_bayar',
+            'registrasi.no_sjp as no_sep',
+            'su.nama_sub_unit as nama_poliklinik',
+            'sub.nama_sub_unit as nama_ruang',
+        )
+        ->join('cara_bayar as cb', 'registrasi.kd_cara_bayar', 'cb.kd_cara_bayar')
+        ->leftJoin('rawat_jalan as rj', 'registrasi.no_reg','rj.no_reg')
+        ->leftJoin('sub_unit as su', 'rj.kd_poliklinik','su.kd_sub_unit')
+        ->leftJoin('rawat_inap as ri', 'registrasi.no_reg','ri.no_reg')
+        ->leftJoin('tempat_tidur as tt', 'ri.kd_tempat_tidur','tt.kd_tempat_tidur')
+        ->leftJoin('kamar as km', 'tt.kd_kamar','km.kd_kamar')
+        ->leftJoin('sub_unit as sub', 'km.kd_sub_unit','sub.kd_sub_unit')
+        ->where('registrasi.status_keluar', '!=', 2)
+        ->where('registrasi.no_rm', $noRm)
+        ->whereBetween('registrasi.tgl_reg', [$tglMulai, $now])
+        ->orderBy('registrasi.tgl_reg', 'desc')
+        ->get();
+        if ($riwayatPasien->count() > 0) {
+            $this->riwayatPasien = $riwayatPasien;
+            $this->showModalRiwayatPasien = true;
+        } else {
+            $this->riwayatPasien = [];
+            $this->showModalRiwayatPasien = true;
+        }
+        
     }
 
     public function render()

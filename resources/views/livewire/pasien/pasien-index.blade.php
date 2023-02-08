@@ -144,6 +144,7 @@
                         {{ $dataPasien->appends(['search' => 'search'])->render() }}
                     </div>
                     @include('livewire.pasien.modal-detail-pasien')
+                    @include('livewire.pendaftaran.rawatjalan.modal-riwayat-pasien')
                 </div>
             </div>
         </div>

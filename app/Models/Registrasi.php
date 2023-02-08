@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Registrasi extends Model
 {
     use HasFactory;
+
+    protected $connection = "sqlsrv";
+
+    protected $table = "registrasi";
+
+    protected $primaryKey = "no_reg";
+
+    protected $keyType = "string";
 }

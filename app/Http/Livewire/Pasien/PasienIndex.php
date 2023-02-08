@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Pasien;
 use App\Models\Kabupaten;
 use App\Models\Pasien;
 use App\Models\Propinsi;
+use App\Models\Registrasi;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,8 +17,14 @@ class PasienIndex extends Component
     public $tanggal;
     public $limit = 20;
 
+     // Model List
+    public $riwayatPasien;
+
     public $selectedKabupaten = null;
     public $selectedKelamin = null;
+
+    // MODAL
+    public $showModalRiwayatPasien = false;
 
     public $pasien;
 
@@ -94,6 +101,41 @@ class PasienIndex extends Component
         $this->pasien['rw'] = $data->rw ?? "-";
         // dd($this->pasien);
         $this->showModalPasien = true;
+    }
+
+     public function showDetailRm($noRm)
+    {
+        $now = now();
+        $tglMulai = date_format(date_sub(date_create($now), date_interval_create_from_date_string('30 days')), 'Y-m-d');
+        $riwayatPasien = Registrasi::select(
+            'registrasi.no_reg',
+            'registrasi.tgl_reg as tanggal_reg',
+            'registrasi.jns_rawat as jenis_rawat',
+            'cb.keterangan as cara_bayar',
+            'registrasi.no_sjp as no_sep',
+            'su.nama_sub_unit as nama_poliklinik',
+            'sub.nama_sub_unit as nama_ruang',
+        )
+        ->join('cara_bayar as cb', 'registrasi.kd_cara_bayar', 'cb.kd_cara_bayar')
+        ->leftJoin('rawat_jalan as rj', 'registrasi.no_reg','rj.no_reg')
+        ->leftJoin('sub_unit as su', 'rj.kd_poliklinik','su.kd_sub_unit')
+        ->leftJoin('rawat_inap as ri', 'registrasi.no_reg','ri.no_reg')
+        ->leftJoin('tempat_tidur as tt', 'ri.kd_tempat_tidur','tt.kd_tempat_tidur')
+        ->leftJoin('kamar as km', 'tt.kd_kamar','km.kd_kamar')
+        ->leftJoin('sub_unit as sub', 'km.kd_sub_unit','sub.kd_sub_unit')
+        ->where('registrasi.status_keluar', '!=', 2)
+        ->where('registrasi.no_rm', $noRm)
+        ->whereBetween('registrasi.tgl_reg', [$tglMulai, $now])
+        ->orderBy('registrasi.tgl_reg', 'desc')
+        ->get();
+        if ($riwayatPasien->count() > 0) {
+            $this->riwayatPasien = $riwayatPasien;
+            $this->showModalRiwayatPasien = true;
+        } else {
+            $this->riwayatPasien = [];
+            $this->showModalRiwayatPasien = true;
+        }
+        
     }
 
     public function render()

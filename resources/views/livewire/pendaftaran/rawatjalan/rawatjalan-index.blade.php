@@ -139,6 +139,7 @@
                     </div>
                     @include('livewire.pendaftaran.rawatjalan.modal-sep')
                     @include('livewire.pendaftaran.rawatjalan.modal-rujukan')
+                    @include('livewire.pendaftaran.rawatjalan.modal-riwayat-pasien')
 
                 </div>
             </div>

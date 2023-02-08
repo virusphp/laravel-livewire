@@ -40,6 +40,11 @@ function jenisKelamin($nilai)
     return $nilai == 1 ? "Laki laki" : "Perempuan";
 }
 
+function jenisRawat($nilai)
+{
+    return (($nilai == 3 ? "Rawat Darurat" : $nilai == 2) ? "Rawat Inap" : "Rawat Jalan");
+}
+
 function statusRm($nilai)
 {
     return '<button wire:click="showDetailRm('.$nilai.')" class="border border-blue-600 bg-gray-100 text-blue-600 text-sm font-medium mr-2 px-1.5 py-0.5 rounded hover:bg-blue-600 hover:text-white" >'.$nilai.'</button>';
