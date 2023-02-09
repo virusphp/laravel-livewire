@@ -65,4 +65,8 @@ Route::middleware([
         Route::get('pasien', PasienIndex::class)->name('pasien');
     });
 
+    Route::group(['namespace' => 'Casmix'], function () {
+        Route::get('coding', CodingIndex::class)->name('coding');
+    });
+
 });
