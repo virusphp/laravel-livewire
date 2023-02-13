@@ -46,7 +46,7 @@ trait Inacbg
 		/// check signature, against padding oracle attack
 		$calc_signature = mb_substr(hash_hmac("sha256", $encrypted, $key, true), 0, 10, "8bit");
 
-		if(!inacbg_compare($signature,$calc_signature)) {
+		if(!$this->inacbg_compare($signature,$calc_signature)) {
 			return "SIGNATURE_NOT_MATCH"; /// signature doesn't match
 		}
 

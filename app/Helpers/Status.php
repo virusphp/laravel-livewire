@@ -61,5 +61,5 @@ function statusRujukanPcare($nilai)
 
 function detailKlaim($tanggal, $noSep)
 {
-    return '<button wire:click="showDetailKlaim('.$noSep.')" class="border border-blue-600 bg-gray-100 text-blue-600 text-sm font-medium mr-2 px-1.5 py-0.5 rounded hover:bg-blue-600 hover:text-white" >'.tanggalFormat($tanggal).'</button>';
+    return "<button wire:click=showDetailKlaim('{$noSep}') class='border border-blue-600 bg-gray-100 text-blue-600 text-sm font-medium mr-2 px-1.5 py-0.5 rounded hover:bg-blue-600 hover:text-white'>".tanggalFormat($tanggal)."</button>";
 }

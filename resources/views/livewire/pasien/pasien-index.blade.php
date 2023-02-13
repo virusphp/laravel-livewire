@@ -60,6 +60,7 @@
                                 placeholder="Pilih Jenis kelamin!" />
                         </div>
                     </div>
+
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                         <table class="w-full text-xs text-left text-gray-500 dark:text-gray-400">
                             <thead
