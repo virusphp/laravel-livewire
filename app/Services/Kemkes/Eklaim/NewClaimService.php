@@ -35,9 +35,9 @@ class NewClaimService
     public function postNewClaim($data)
     {
         $data = $this->handleRequest($data);
-        dd($data);
         $claimPrint =  $this->bridge->postRequest($data);
 		$response = $this->handleResponse($claimPrint);
+        dd($response);
 		return $response;
 	}
 

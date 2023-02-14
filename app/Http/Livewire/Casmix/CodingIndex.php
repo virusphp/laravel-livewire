@@ -13,6 +13,7 @@ class CodingIndex extends Component
     use Inacbg;
 
     public $search;
+    public $limit = 10;
 
     public $detailPasien = null;
 
@@ -43,6 +44,7 @@ class CodingIndex extends Component
     public function showDetailKlaim($noSep)
     {
         $data = $this->getDataClaim($noSep);
+        dd($data);
         $bridge = new NewClaimService();
         $dataClaim = $bridge->postNewClaim($data);
     }
