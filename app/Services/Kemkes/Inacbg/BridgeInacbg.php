@@ -28,8 +28,6 @@ class BridgeInacbg extends CurlFactory
         $first = strpos($data, "\n")+1;
         $last = strpos($data, "\n")-1;
         $response = substr($data, $first, strlen($data) - $first - $last);
-        // dd($response, config('eklaim.api.secretkey'));
-
         $response = $this->inacbg_decrypt($response, config('eklaim.api.secretkey'));
         $message = json_decode($response, true);
         return $message;

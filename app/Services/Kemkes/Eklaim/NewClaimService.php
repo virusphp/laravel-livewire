@@ -37,7 +37,6 @@ class NewClaimService
         $data = $this->handleRequest($data);
         $claimPrint =  $this->bridge->postRequest($data);
 		$response = $this->handleResponse($claimPrint);
-        dd($response);
 		return $response;
 	}
 
@@ -47,7 +46,6 @@ class NewClaimService
         $last = strpos($response, "\n")-1;
         $response = substr($response, $first, strlen($response) - $first - $last);
         $response = $this->inacbg_decrypt($response, config('eklaim.api.secretkey'));
-        $result = json_decode($response, true);
-        return $result;
+        return $response;
     }
 }
